@@ -15,7 +15,7 @@
  */
 
 
-namespace App\DependencyInjection;
+namespace AlexandreT\Bundle\CasGuardBundle\DependencyInjection;
 
 
 use Symfony\Component\Config\FileLocator;

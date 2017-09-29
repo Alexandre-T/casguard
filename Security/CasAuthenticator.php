@@ -13,7 +13,7 @@
  *
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
  */
-namespace AlexandreT\CasGuardBundle\Security;
+namespace AlexandreT\Bundle\CasGuardBundle\Security;
 
 use Doctrine\ORM\EntityManager;
 use phpCAS;

@@ -1,6 +1,6 @@
 services:
     app.cas_authenticator:
-        class: AlexandreT\CasGuardBundle\Security\CasAuthenticator
+        class: AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator
         autowire: false
         arguments:
             - '@doctrine.orm.default'

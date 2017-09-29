@@ -12,8 +12,9 @@
  * @copyright 2017 Cerema
  * @license   CeCILL-B V1
  */
-namespace AlexandreT\CasGuardBundle;
+namespace AlexandreT\Bundle\CasGuardBundle;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**

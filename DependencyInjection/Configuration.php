@@ -14,7 +14,7 @@
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
  */
 
-namespace App\DependencyInjection;
+namespace AlexandreT\Bundle\CasGuardBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
