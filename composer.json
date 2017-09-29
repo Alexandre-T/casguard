@@ -13,7 +13,7 @@
     "require": {
         "php": "^5.5.9|>=7.0.8",
         "jasig/phpcas": "~1.3",
-	      "symfony/security-guard": "~2.8|~3.0|~4.0",
+	"symfony/security-guard": "~2.8|~3.0|~4.0"
     },
     "autoload": {
         "psr-4": { "AlexandreT\\CasGuardBundle\\": "" }
