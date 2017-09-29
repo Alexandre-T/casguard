@@ -10,14 +10,26 @@
             "email": "alexandre.tranchant@gmail.com"
         }
     ],
+    "support": {
+        "email": "Alexandre.Tranchant@gmail.com",
+        "issues": "https://github.com/Alexandre-T/casguard/issues",
+        "source": "https://github.com/Alexandre-T/casguard"
+    },
     "require": {
         "php": "^5.5.9|>=7.0.8",
         "jasig/phpcas": "~1.3",
-	"symfony/security-guard": "~2.8|~3.0|~4.0"
+	    "symfony/security-guard": "~2.8|~3.0|~4.0",
+        "symfony/config": "^3.3",
+        "symfony/dependency-injection": "^3.3",
+        "symfony/routing": "^3.3",
+        "doctrine/orm": "^2.5"
     },
     "autoload": {
         "psr-4": { "AlexandreT\\CasGuardBundle\\": "" }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "symfony/debug": "^3.3"
+    }
 }
