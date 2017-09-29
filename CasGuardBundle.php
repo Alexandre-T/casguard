@@ -12,7 +12,7 @@
  * @copyright 2017 Cerema
  * @license   CeCILL-B V1
  */
-namespace AlexandreT\CasGuardBundle
+namespace AlexandreT\CasGuardBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
