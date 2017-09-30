@@ -1,5 +1,5 @@
 services:
-    app.cas_authenticator:
+    cas_authenticator:
         class: AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator
         autowire: false
         arguments:
