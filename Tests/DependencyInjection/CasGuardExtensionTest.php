@@ -34,7 +34,7 @@ class CasGuardExtensionTest extends TestCase
      *
      * @var string
      */
-    private $root = 'phpcas_guard';
+    private $root = 'cas_config';
 
     /**
      * Prepares the environment before running a test.
@@ -66,21 +66,24 @@ class CasGuardExtensionTest extends TestCase
     public function testValidConfiguration()
     {
         $this->casGuardExtension->load([
-            $this->root => [
-                'debug' => true,
-                'hostname' => 'example.org',
-                'port' => 80,
-                'uri_login' => 'http://www.example.org/',
-                'url' => 'cas/login/',
-                'version' => CAS_VERSION_2_0,
-                'repository' => 'AppBundle:User',
-                'property' => 'mail',
-                'route' => [
-                    'homepage' => 'home',
-                    'login' => 'login',
+            'php_cas' =>
+                [
+                    'debug' => true,
+                    'hostname' => 'example.org',
+                    'port' => 80,
+                    'uri_login' => 'http://www.example.org/',
+                    'url' => 'cas/login/',
+                    'version' => CAS_VERSION_2_0,
+                    'repository' => 'AppBundle:User',
+                    'property' => 'mail',
+                    'route' => [
+                        'homepage' => 'home',
+                        'login' => 'login',
+                    ],
                 ],
             ],
-        ], $this->getContainer());
+            $container = $this->getContainer()
+        );
 
         $expected = [
             'debug' => true,
@@ -97,7 +100,9 @@ class CasGuardExtensionTest extends TestCase
             ],
         ];
 
-        self::assertEquals($expected, $this->casGuardExtension->getProcessedConfigs()[0]);
+        $this->assertTrue($container->hasParameter($this->root));
+        $this->assertEquals($expected, $container->getParameter($this->root));
+
     }
 
     /**
