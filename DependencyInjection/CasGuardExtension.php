@@ -14,9 +14,7 @@
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
  */
 
-
 namespace AlexandreT\Bundle\CasGuardBundle\DependencyInjection;
-
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -45,7 +43,7 @@ class CasGuardExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('cas_authenticator', $config);
+        $container->setParameter('cas_config', $config);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

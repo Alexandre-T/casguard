@@ -1,9 +1,12 @@
 services:
-    cas_authenticator:
+    phpcasguard.cas_service:
+        arguments:
+           - '%cas_config%'
+    phpcasguard.cas_authenticator:
         class: AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator
         autowire: false
         arguments:
-            - '@doctrine.orm.default'
+            - '@doctrine.orm.entity_manager'
             - '@security.token_storage'
             - '@router'
-            - '%cas%'
+            - '@phpcasguard.cas_service'

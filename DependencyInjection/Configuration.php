@@ -20,14 +20,16 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritdoc}
+     * Generates the configuration tree builder.
+     *
+     * @return TreeBuilder The tree builder
      */
     public function getConfigTreeBuilder()
     {
@@ -35,16 +37,62 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('phpcas_guard');
         $rootNode
             ->children()
-            ->scalarNode('hostname')->defaultValue('')->end()
-            ->scalarNode('login')->defaultValue('')->end()
-            ->scalarNode('port')->defaultValue(443)->end()
-            ->scalarNode('url')->defaultValue('cas/login')->end()
-            ->scalarNode('version')->defaultValue('3.0')->end()
-//            ->scalarNode('ca')->defaultNull()->end()
-//            ->booleanNode('handleLogoutRequest')->defaultValue(false)->end()
-//            ->scalarNode('casLogoutTarget')->defaultNull()->end()
-//            ->booleanNode('force')->defaultValue(true)->end()
+                ->booleanNode('debug')
+                    ->defaultValue(false)
+                ->end()
+                ->scalarNode('hostname')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->integerNode('port')
+                    ->defaultValue(443)
+                ->end()
+                ->scalarNode('uri_login')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('url')
+                    ->defaultValue('cas/login')
+                ->end()
+                ->enumNode('version')
+                    ->values([
+                        CAS_VERSION_3_0,
+                        CAS_VERSION_2_0,
+                        CAS_VERSION_1_0,
+                    ])
+                    ->defaultValue(CAS_VERSION_3_0)
+                ->end()
+//                ->scalarNode('ca')
+//                    ->defaultNull()
+//                ->end()
+//                ->booleanNode('handleLogoutRequest')
+//                    ->defaultValue(false)
+//                ->end()
+//                ->scalarNode('casLogoutTarget')
+//                    ->defaultNull()
+//                ->end()
+//                ->booleanNode('force')
+//                    ->defaultValue(true)
+//                ->end()
+                ->scalarNode('repository')
+                    ->defaultValue('App:User')
+                ->end()
+                ->scalarNode('property')
+                    ->defaultValue('username')
+                ->end()
+                ->arrayNode('route')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('homepage')
+                            ->defaultValue('homepage')
+                        ->end()
+                        ->scalarNode('login')
+                            ->defaultValue('security_login')
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
+
         return $treeBuilder;
     }
 }

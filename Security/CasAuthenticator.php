@@ -13,8 +13,10 @@
  *
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
  */
+
 namespace AlexandreT\Bundle\CasGuardBundle\Security;
 
+use AlexandreT\Bundle\CasGuardBundle\Service\CasServiceInterface;
 use Doctrine\ORM\EntityManager;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,11 +63,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     private $router;
 
     /**
-     * Array of configuration
+     * CasService interface.
      *
-     * @var array
+     * @var CasServiceInterface
      */
-    private $config;
+    private $cas;
 
     /**
      * Cas Authenticator constructor.
@@ -73,15 +75,14 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      * @param EntityManager         $em
      * @param TokenStorageInterface $tokenStorage
      * @param RouterInterface       $router
-     * @param array                 $config
+     * @param CasServiceInterface   $cas
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RouterInterface $router, array $config)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RouterInterface $router, CasServiceInterface $cas)
     {
         $this->em = $em;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
-        $this->config = $config;
-        //dump($config);
+        $this->cas = $cas;
     }
 
     /**
@@ -98,15 +99,22 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
         phpCAS::setVerbose(true);
         //phpCAS::setLang(PHPCAS_LANG_FRENCH);
         phpCAS::client(
-            $this->config['version'],
-            $this->config['hostname'],
-            $this->config['port'],
-            $this->config['uri']);
+            $this->cas->getVersion(),
+            $this->cas->getHostname(),
+            $this->cas->getPort(),
+            $this->cas->getUri()
+        );
+
+        //FIXME add a test
         //phpCAS::setCasServerCACert($mon_certificat);
         phpCAS::setNoCasServerValidation();
+
+        //FIXME Understand this line and add a test
         //phpCAS::handleLogoutRequests();
+
         phpCAS::forceAuthentication();
 
+        // Return User
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
         }
@@ -117,24 +125,22 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     /**
      * getUser function.
      *
-     * @param string $credentials
+     * @param string                $credentials
      * @param UserProviderInterface $userProvider
      *
      * @return null|object
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $repository = $this->em->getRepository($this->config['repository']);
+        $repository = $this->em->getRepository($this->cas->getRepository());
 
         return $repository->findOneBy([
-            $this->config['column'] => $credentials
+            $this->cas->getProperty() => $credentials,
         ]);
     }
 
     /**
-     *
-     *
-     * @param mixed $credentials
+     * @param mixed         $credentials
      * @param UserInterface $user
      *
      * @return bool
@@ -147,11 +153,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     /**
      * What is done when user authentification is valid.
      *
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
-     * @param string $providerKey
-     *
-     * @return null
+     * @param string         $providerKey
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -162,7 +166,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     /**
      * What to do when the authentification failed.
      *
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $exception
      *
      * @return JsonResponse
@@ -171,26 +175,27 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     {
         //TODO Add a flashbag message.
         $data = array(
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         );
+
         return new JsonResponse($data, 403);
     }
 
     /**
-     * Called when authentication is needed, but it's not sent
+     * Called when authentication is needed, but it's not sent.
      *
-     * @param Request $request
+     * @param Request                      $request
      * @param AuthenticationException|null $authException
      *
      * @return RedirectResponse
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->config['uri_login'] . $request->getUri());
+        return new RedirectResponse($this->cas->getUri().$request->getUri());
     }
 
     /**
-     * Generate the default Success redirect url
+     * Generate the default Success redirect url.
      *
      * @return string
      */
@@ -206,7 +211,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     protected function getLoginUrl()
     {
-        return $this->router->generate('security_login');
+        $route = $this->cas->getRouteLogin();
+
+        return $this->router->generate($route);
     }
 
     /**
@@ -229,12 +236,17 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     public function onLogoutSuccess(Request $request)
     {
         phpCAS::client(
-            $this->config['version'],
-            $this->config['hostname'],
-            $this->config['port'],
-            $this->config['uri']
+            $this->cas->getVersion(),
+            $this->cas->getHostname(),
+            $this->cas->getPort(),
+            $this->cas->getUri()
         );
         phpCAS::logout();
-        return new RedirectResponse($this->router->generate('homepage'));
+
+        $uri = $this->router->generate(
+            $this->cas->getRouteHomepage()
+        );
+
+        return new RedirectResponse($uri);
     }
 }

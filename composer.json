@@ -22,7 +22,8 @@
         "symfony/config": "^3.3",
         "symfony/dependency-injection": "^3.3",
         "symfony/routing": "^3.3",
-        "doctrine/orm": "^2.5"
+        "doctrine/orm": "^2.5",
+        "symfony/yaml": "^3.3"
     },
     "autoload": {
         "psr-4": { "AlexandreT\\Bundle\\CasGuardBundle\\": "" }
@@ -30,6 +31,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "symfony/debug": "^3.3"
+        "symfony/debug": "^3.3",
+        "phpunit/phpunit": "^6.3",
+        "symfony/phpunit-bridge": "^3.3"
     }
 }
