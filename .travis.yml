@@ -10,11 +10,10 @@ cache:
 
 # Base versions to test raw with the Symfony latest version.
 php:
-  - 5.3
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
+  - 7.1
+  - 7.2
   - hhvm
 
 # The Symfony version implies that you require the full framework, not single components
@@ -34,7 +33,21 @@ matrix:
     - php: 5.6
       env: SYMFONY_VERSION="2.8.x"
     - php: 5.6
+      env: SYMFONY_VERSION="3.0.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="3.1.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="3.2.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="3.3.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="3.4.x"
+    - php: 5.6
       env: SYMFONY_VERSION="dev-master"
+    - php: 7.0
+      env: SYMFONY_VERSION="2.7.x"
+    - php: 7.0
+      env: SYMFONY_VERSION="2.8.x"
     - php: 7.0
       env: SYMFONY_VERSION="3.1.x"
     - php: 7.0
@@ -42,6 +55,30 @@ matrix:
     - php: 7.0
       env: SYMFONY_VERSION="3.3.x"
     - php: 7.0
+      env: SYMFONY_VERSION="3.4.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="2.7.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="2.8.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="3.1.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="3.2.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="3.3.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="3.4.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="2.7.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="2.8.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="3.1.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="3.2.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="3.3.x"
+    - php: 7.2
       env: SYMFONY_VERSION="3.4.x"
   allow_failures:
     - php: hhvm
