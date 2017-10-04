@@ -66,8 +66,7 @@ class CasGuardExtensionTest extends TestCase
     public function testValidConfiguration()
     {
         $this->casGuardExtension->load([
-            'php_cas' =>
-                [
+            'php_cas' => [
                     'debug' => true,
                     'hostname' => 'example.org',
                     'port' => 80,
@@ -102,7 +101,6 @@ class CasGuardExtensionTest extends TestCase
 
         $this->assertTrue($container->hasParameter($this->root));
         $this->assertEquals($expected, $container->getParameter($this->root));
-
     }
 
     /**

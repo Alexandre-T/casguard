@@ -38,18 +38,16 @@ class CasGuardBundleTest extends TestCase
      */
     public function testBuildCompilerPasses()
     {
-
         $container = new ContainerBuilder();
         $bundle = new CasGuardBundle();
         $bundle->build($container);
         $config = $container->getCompilerPassConfig();
         $passes = $config->getBeforeOptimizationPasses();
 
-
         $foundConditionalsPass = false;
         $foundResolveClassPass = false;
 
-        if (version_compare(Kernel::VERSION, '3.2') < 1){
+        if (version_compare(Kernel::VERSION, '3.2') < 1) {
             self::assertTrue(true); //no test for these version.
         } else {
             foreach ($passes as $pass) {
