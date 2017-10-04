@@ -1,49 +1,74 @@
-# Project language
 language: php
 
+# Allows using containers
+sudo: false
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+# Base versions to test raw with the Symfony latest version.
 php:
-  # aliased to a recent 5.6.x version
+  - 5.3
+  - 5.4
+  - 5.5
   - 5.6
-  # aliased to a recent 7.x version
   - 7.0
-  # aliased to a recent 7.x version
-  - 7.1
-  # aliased to a recent 7.x version
-  - 7.2
-  # aliased to a recent hhvm version
   - hhvm
 
-# Matrix to test in every php version
+# The Symfony version implies that you require the full framework, not single components
+# Requiring single components is much harder to do... And probably not flexible enough, even if it's lighter.
+env:
+  global:
+    - SYMFONY_VERSION=""
+
+# Heavy matrix to test every version of the bundle/package
 matrix:
   # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
   fast_finish: true
+  include:
+    # Lowest dependency
+    - php: 5.6
+      env: SYMFONY_VERSION="2.7.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="2.8.x"
+    - php: 5.6
+      env: SYMFONY_VERSION="dev-master"
+    - php: 7.0
+      env: SYMFONY_VERSION="3.1.x"
+    - php: 7.0
+      env: SYMFONY_VERSION="3.2.x"
+    - php: 7.0
+      env: SYMFONY_VERSION="3.3.x"
+    - php: 7.0
+      env: SYMFONY_VERSION="3.4.x"
   allow_failures:
     - php: hhvm
+    - env: SYMFONY_VERSION="dev-master"
 
-# Define an environment variable
-env:
-  - SYMFONY_VERSION="2.8.*"
-  - SYMFONY_VERSION="3.0.*"
-  - SYMFONY_VERSION="3.1.*"
-  - SYMFONY_VERSION="3.2.*"
-  - SYMFONY_VERSION="3.3.*"
-  - SYMFONY_VERSION="3.4.*"
+# Update composer, and update Symfony version depending on the matrix
+before_install:
+  - composer selfupdate
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony:$SYMFONY_VERSION; fi
+  - mkdir build
 
-# Update composer
-before-install:
-  - composer self-update
-
-before_script:
+# Install composer dependencies,
+#  but also phpunit (to test a specific version of it)
+#  and coveralls (to send the code coverage to coveralls.io, see "after_success" later in this file)
+# Note: for coveralls to work you need a ".coveralls.yml" file (see other file in this gist).
+install:
   - composer install
+#  - composer require --dev phpunit/phpunit:~5.0
+  - composer require --dev satooshi/php-coveralls:~0.6
 
+# Run script and log coverage in the "build" directory
 script:
-  - if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then travis_wait 40 php vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml; fi
-  - if [ "$TRAVIS_PHP_VERSION" != "5.6" ]; then php vendor/phpunit/phpunit/phpunit ; fi
+  - vendor/bin/phpunit --coverage-text --coverage-clover build/coverage-clover.xml
 
-after_success:
-  - if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then composer require satooshi/php-coveralls --no-interaction --prefer-source; fi
-  - if [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then php vendor/bin/coveralls -v; fi
-
+# Run coveralls after success and if not in hhvm (too much cache, incorrect coverage)
+after_success: |
+  if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;
+# After a build, sends a notification to this e-mail with the build results.
 notifications:
-  email:
-    - alexandre.tranchant@gmail.com
+  email: alexandre.tranchant@gmail.com
