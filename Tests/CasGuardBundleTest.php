@@ -47,7 +47,7 @@ class CasGuardBundleTest extends TestCase
         $foundConditionalsPass = false;
         $foundResolveClassPass = false;
 
-        if (version_compare(Kernel::VERSION, '3.2') < 1) {
+        if (version_compare(Kernel::VERSION, '3.3', '<')) {
             self::assertTrue(true); //no test for these version.
         } else {
             foreach ($passes as $pass) {
