@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the casguard.
+ * This file is part of the PhpCAS Guard Bundle.
  *
  * PHP version 5.6 | 7.0 | 7.1
  *
