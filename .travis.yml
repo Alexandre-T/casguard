@@ -29,8 +29,6 @@ matrix:
   include:
     # Lowest dependency
     - php: 5.6
-      env: SYMFONY_VERSION="2.7.x"
-    - php: 5.6
       env: SYMFONY_VERSION="2.8.x"
     - php: 5.6
       env: SYMFONY_VERSION="3.0.x"
@@ -45,8 +43,6 @@ matrix:
     - php: 5.6
       env: SYMFONY_VERSION="dev-master"
     - php: 7.0
-      env: SYMFONY_VERSION="2.7.x"
-    - php: 7.0
       env: SYMFONY_VERSION="2.8.x"
     - php: 7.0
       env: SYMFONY_VERSION="3.1.x"
@@ -57,8 +53,6 @@ matrix:
     - php: 7.0
       env: SYMFONY_VERSION="3.4.x"
     - php: 7.1
-      env: SYMFONY_VERSION="2.7.x"
-    - php: 7.1
       env: SYMFONY_VERSION="2.8.x"
     - php: 7.1
       env: SYMFONY_VERSION="3.1.x"
@@ -68,14 +62,6 @@ matrix:
       env: SYMFONY_VERSION="3.3.x"
     - php: 7.1
       env: SYMFONY_VERSION="3.4.x"
-    - php: 7.2
-      env: SYMFONY_VERSION="2.7.x"
-    - php: 7.2
-      env: SYMFONY_VERSION="2.8.x"
-    - php: 7.2
-      env: SYMFONY_VERSION="3.1.x"
-    - php: 7.2
-      env: SYMFONY_VERSION="3.2.x"
     - php: 7.2
       env: SYMFONY_VERSION="3.3.x"
     - php: 7.2
