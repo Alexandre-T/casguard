@@ -81,6 +81,7 @@ matrix:
     - php: 7.2
       env: SYMFONY_VERSION="3.4.x"
   allow_failures:
+    - php: 7.2
     - php: hhvm
     - env: SYMFONY_VERSION="dev-master"
 
