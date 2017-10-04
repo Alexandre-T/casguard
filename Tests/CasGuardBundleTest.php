@@ -19,7 +19,9 @@ namespace AlexandreT\Bundle\CasGuardBundle\Tests;
 use AlexandreT\Bundle\CasGuardBundle\CasGuardBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Compiler\ResolveClassPass;
+use Symfony\Component\DependencyInjection\Compiler\ResolveInstanceofConditionalsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * CasGuardBundleTest class.
@@ -36,21 +38,34 @@ class CasGuardBundleTest extends TestCase
      */
     public function testBuildCompilerPasses()
     {
+
         $container = new ContainerBuilder();
         $bundle = new CasGuardBundle();
         $bundle->build($container);
         $config = $container->getCompilerPassConfig();
         $passes = $config->getBeforeOptimizationPasses();
+
+
+        $foundConditionalsPass = false;
         $foundResolveClassPass = false;
 
-        foreach ($passes as $pass) {
+        if (version_compare(Kernel::VERSION, '3.2') < 1){
+            self:assertTrue(true); //no test for these version.
+        } else {
+            foreach ($passes as $pass) {
+                if ($pass instanceof ResolveInstanceofConditionalsPass) {
+                    $foundConditionalsPass = true;
+                    continue;
+                }
 
-            if ($pass instanceof ResolveClassPass) {
-                $foundResolveClassPass = true;
-                continue;
+                if ($pass instanceof ResolveClassPass) {
+                    $foundResolveClassPass = true;
+                    continue;
+                }
             }
-        }
 
-        $this->assertTrue($foundResolveClassPass, 'ResolveClassPass was not found');
+            self::assertTrue($foundConditionalsPass, 'ResolveInstanceofConditionalsPass was not found');
+            self::assertTrue($foundResolveClassPass, 'ResolveClassPass was not found');
+        }
     }
 }
