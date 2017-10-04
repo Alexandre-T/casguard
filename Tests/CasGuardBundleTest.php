@@ -19,7 +19,6 @@ namespace AlexandreT\Bundle\CasGuardBundle\Tests;
 use AlexandreT\Bundle\CasGuardBundle\CasGuardBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Compiler\ResolveClassPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveInstanceofConditionalsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -42,14 +41,9 @@ class CasGuardBundleTest extends TestCase
         $bundle->build($container);
         $config = $container->getCompilerPassConfig();
         $passes = $config->getBeforeOptimizationPasses();
-        $foundConditionalsPass = false;
         $foundResolveClassPass = false;
 
         foreach ($passes as $pass) {
-            if ($pass instanceof ResolveInstanceofConditionalsPass) {
-                $foundConditionalsPass = true;
-                continue;
-            }
 
             if ($pass instanceof ResolveClassPass) {
                 $foundResolveClassPass = true;
@@ -57,7 +51,6 @@ class CasGuardBundleTest extends TestCase
             }
         }
 
-        $this->assertTrue($foundConditionalsPass, 'ResolveInstanceofConditionalsPass was not found');
         $this->assertTrue($foundResolveClassPass, 'ResolveClassPass was not found');
     }
 }
