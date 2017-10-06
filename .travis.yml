@@ -88,7 +88,7 @@ install:
 
 # Run script and log coverage in the "build" directory
 script:
-  - vendor/bin/phpunit --coverage-text ---coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
 
 # Run coveralls after success and if not in hhvm (too much cache, incorrect coverage)
 after_success: |
