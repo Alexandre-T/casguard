@@ -119,6 +119,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
         }
+
         return null;
     }
 
@@ -156,8 +157,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      * @param Request        $request
      * @param TokenInterface $token
      * @param string         $providerKey
-     *
-     * @return null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {

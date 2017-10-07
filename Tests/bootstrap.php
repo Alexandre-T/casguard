@@ -13,7 +13,6 @@
  *
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
  */
-
 include __DIR__.'/../vendor/autoload.php'; // composer autoload
 
 $kernel = \AspectMock\Kernel::getInstance();

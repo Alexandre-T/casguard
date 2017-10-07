@@ -87,11 +87,12 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testAspectMock()
     {
-        $phpCas = test::double('phpCAS',['setDebug' => function(){echo 'YES I CALL THE MOCKED Debug function';}]);
+        $phpCas = test::double('phpCAS', ['setDebug' => function () {echo 'YES I CALL THE MOCKED Debug function'; }]);
         phpCAS::setDebug();
-        $phpCas->verifyInvoked('setDebug',false);
+        $phpCas->verifyInvoked('setDebug', false);
         self::expectOutputString('YES I CALL THE MOCKED Debug function');
     }
+
     /**
      * Test the first example in phpcas documentation.
      *
@@ -101,13 +102,12 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testExample1()
     {
-
         $expected = $actual = 'foo';
 
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
-        $phpCas['forceAuthentication'] = test::double('phpCAS',['forceAuthentication' => null]);
+        $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
         $phpCas['getUser'] = test::double('phpCAS', ['getUser' => $actual]);
 
         //The first request call credentials and return a user (here this is a string)
@@ -118,7 +118,6 @@ class CasAuthenticatorTest extends TestCase
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
         $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 2);
-
     }
 
     /**
@@ -128,7 +127,10 @@ class CasAuthenticatorTest extends TestCase
     {
         //To fix a bug in AspectMock library.
         //In PHPUnit 6.x the PHPUnit_Framework_ExpectationFailedException was replaced by ExpectationFailedException
-        class_alias('PHPUnit\Framework\ExpectationFailedException','\PHPUnit_Framework_ExpectationFailedException');
+        if (class_exists('PHPUnit\Framework\ExpectationFailedException')) {
+            class_alias('PHPUnit\Framework\ExpectationFailedException', '\PHPUnit_Framework_ExpectationFailedException');
+        }
+
         parent::setUpBeforeClass();
     }
 
