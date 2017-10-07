@@ -95,8 +95,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function getCredentials(Request $request)
     {
-        //phpCAS::setDebug();
-        phpCAS::setVerbose(true);
+        //FIXME It could be something else than a boolean!
+        phpCAS::setDebug($this->cas->getDebug());
+        //phpCAS::setVerbose(true);
         //phpCAS::setLang(PHPCAS_LANG_FRENCH);
         phpCAS::client(
             $this->cas->getVersion(),
@@ -118,7 +119,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
         if (phpCAS::getUser()) {
             return phpCAS::getUser();
         }
-
         return null;
     }
 
@@ -156,6 +156,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      * @param Request        $request
      * @param TokenInterface $token
      * @param string         $providerKey
+     *
+     * @return null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
@@ -235,6 +237,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function onLogoutSuccess(Request $request)
     {
+        phpCAS::setDebug($this->cas->getDebug());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),
