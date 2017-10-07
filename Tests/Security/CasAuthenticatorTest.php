@@ -84,10 +84,15 @@ class CasAuthenticatorTest extends TestCase
 
     /**
      * This is a test to validate AspectMock configuration.
+     * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
      */
     public function testAspectMock()
     {
-        $phpCas = test::double('phpCAS', ['setDebug' => function () {echo 'YES I CALL THE MOCKED Debug function'; }]);
+        //Serialization of 'Closure' is not allowed in PHP 5.6
+        function echoOK() {echo 'YES I CALL THE MOCKED Debug function'; }
+        $callback = 'echoOK';
+
+        $phpCas = test::double('phpCAS', ['setDebug' => $callback()]);
         phpCAS::setDebug();
         $phpCas->verifyInvoked('setDebug', false);
         self::expectOutputString('YES I CALL THE MOCKED Debug function');
