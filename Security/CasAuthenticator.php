@@ -22,6 +22,7 @@ use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -158,25 +159,39 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     }
 
     /**
-     * What is done when user authentification is valid.
+     * Called when authentication executed and was successful!
+     *
+     * This should return the Response sent back to the user, like a
+     * RedirectResponse to the last page they visited.
+     *
+     * If you return null, the current request will continue, and the user
+     * will be authenticated. This makes sense, for example, with an API.
      *
      * @param Request        $request
      * @param TokenInterface $token
-     * @param string         $providerKey
+     * @param string         $providerKey The provider (i.e. firewall) key
+     *
+     * @return Response|null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        //TODO add a flashbag message
+        //TODO add a flashbag message?
         return null;
     }
 
     /**
-     * What to do when the authentification failed.
+     * Called when authentication executed, but failed (e.g. wrong username password).
+     *
+     * This should return the Response sent back to the user, like a
+     * RedirectResponse to the login page or a 403 response.
+     *
+     * If you return null, the request will continue, but the user will
+     * not be authenticated. This is probably not what you want to do.
      *
      * @param Request                 $request
      * @param AuthenticationException $exception
      *
-     * @return JsonResponse
+     * @return Response|null
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {

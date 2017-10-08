@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use PHPUnit_Framework_MockObject_MockObject;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AspectMock\Test as test;
 use phpCas;
@@ -184,6 +185,18 @@ class CasAuthenticatorTest extends TestCase
             ->getMock();
 
         self::assertEquals($expected, $this->guardAuthenticator->getUser('foo', $user));
+    }
+
+    /**
+     * Test onAuthenticationSuccess() method.
+     */
+    public function testOnAuthenticationSuccess()
+    {
+        /** @var TokenInterface $token Mocked token */
+        $token = $this->getMockBuilder(TokenInterface::class)
+            ->getMock();
+
+        self::assertNull($this->guardAuthenticator->onAuthenticationSuccess(new Request(), $token, 'key'));
     }
 
     /**
