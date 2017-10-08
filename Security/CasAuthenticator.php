@@ -239,7 +239,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     }
 
     /**
-     * We do not support "Remember me" function.
+     * Does this method support remember me cookies?
+     *
+     * No, we do not support remember me cookie, because CAS server is doing it.
      *
      * @return bool
      */
@@ -258,6 +260,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     public function onLogoutSuccess(Request $request)
     {
         phpCAS::setDebug($this->cas->getDebug());
+        phpCAS::setVerbose($this->cas->getVerbose());
+        phpCAS::setLang($this->cas->getLanguage());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),

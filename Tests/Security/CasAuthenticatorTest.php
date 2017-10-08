@@ -200,6 +200,35 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
+     * Test onLogoutSuccess() method.
+     */
+    public function testOnLogoutSuccess()
+    {
+        $phpCas = $this->mockPhpCAS();
+
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('home')
+            ->willReturn('http://www.example.org/foo/home');
+
+        $response = $this->guardAuthenticator->onLogoutSuccess(new Request());
+
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('logout');
+        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
+        $phpCas->verifyNeverInvoked('setCasServerCACert');
+        $phpCas->verifyNeverInvoked('forceAuthentication');
+        $phpCas->verifyNeverInvoked('getUser');
+
+        self::assertEquals(302, $response->getStatusCode());
+        self::assertTrue($response->isRedirect('http://www.example.org/foo/home'));
+    }
+
+    /**
      * Setup the Phpunit exception before class instantiation.
      */
     public static function setUpBeforeClass()
@@ -235,6 +264,9 @@ class CasAuthenticatorTest extends TestCase
             'port' => 443,
             'property' => 'mail',
             'repository' => 'App:User',
+            'route' => [
+                'homepage' => 'home',
+            ],
             'verbose' => true,
             'version' => CAS_VERSION_3_0,
             'uri_login' => '/cas',
@@ -283,10 +315,11 @@ class CasAuthenticatorTest extends TestCase
         test::double('phpCAS', ['setDebug' => null]);
         test::double('phpCAS', ['client' => null]);
         test::double('phpCAS', ['setLang' => null]);
-        test::double('phpCAS', ['setVerbose' => null]);
         test::double('phpCAS', ['forceAuthentication' => null]);
+        test::double('phpCAS', ['logout' => null]);
         test::double('phpCAS', ['setCasServerCACert' => null]);
         test::double('phpCAS', ['setNoCasServerValidation' => null]);
+        test::double('phpCAS', ['setVerbose' => null]);
         $phpCas = test::double('phpCAS', ['getUser' => $modification['getUser']]);
 
         return $phpCas;
