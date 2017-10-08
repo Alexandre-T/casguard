@@ -109,24 +109,18 @@ class CasAuthenticatorTest extends TestCase
     {
         $expected = $actual = 'foo';
 
-        $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
-        $phpCas['client'] = test::double('phpCAS', ['client' => null]);
-        $phpCas['lang'] = test::double('phpCAS', ['setLang' => null]);
-        $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
-        $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
-        $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
-        $phpCas['getUser'] = test::double('phpCAS', ['getUser' => $actual]);
+        $phpCas = $this->mockPhpCAS(['getUser' => $actual]);
 
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas['debug']->verifyInvokedOnce('setDebug');
-        $phpCas['client']->verifyInvokedOnce('client');
-        $phpCas['lang']->verifyInvokedOnce('setLang');
-        $phpCas['verbose']->verifyInvokedOnce('setVerbose');
-        $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
-        $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
-        $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 2);
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedMultipleTimes('getUser', 2);
     }
 
     /**
@@ -138,24 +132,18 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testExampleSimpleWithoutUser()
     {
-        $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
-        $phpCas['client'] = test::double('phpCAS', ['client' => null]);
-        $phpCas['lang'] = test::double('phpCAS', ['setLang' => null]);
-        $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
-        $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
-        $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
-        $phpCas['getUser'] = test::double('phpCAS', ['getUser' => null]);
+        $phpCas = $this->mockPhpCAS();
 
-        //The first request call credentials and return a user (here this is a string)
+        //The second request call credentials and do not return user
         self::assertNull($this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas['debug']->verifyInvokedOnce('setDebug');
-        $phpCas['client']->verifyInvokedOnce('client');
-        $phpCas['verbose']->verifyInvokedOnce('setVerbose');
-        $phpCas['lang']->verifyInvokedOnce('setLang');
-        $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
-        $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
-        $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 1);
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedMultipleTimes('getUser', 1);
     }
 
     /**
@@ -224,5 +212,23 @@ class CasAuthenticatorTest extends TestCase
         $this->router = null;
         $this->casService = null;
         $this->guardAuthenticator = null;
+    }
+
+    /**
+     *
+     */
+    private function mockPhpCAS(array $modification = [])
+    {
+        if (! isset($modification['getUser'])) $modification['getUser'] = null;
+
+        test::double('phpCAS', ['setDebug' => null]);
+        test::double('phpCAS', ['client' => null]);
+        test::double('phpCAS', ['setLang' => null]);
+        test::double('phpCAS', ['setVerbose' => null]);
+        test::double('phpCAS', ['setNoCasServerValidation' => null]);
+        test::double('phpCAS', ['forceAuthentication' => null]);
+        $phpCas = test::double('phpCAS', ['getUser' => $modification['getUser']]);
+
+        return $phpCas;
     }
 }
