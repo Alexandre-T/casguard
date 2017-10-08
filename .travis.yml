@@ -40,8 +40,6 @@ matrix:
       env: SYMFONY_VERSION="3.3.x"
     - php: 5.6
       env: SYMFONY_VERSION="3.4.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="dev-master"
     - php: 7.0
       env: SYMFONY_VERSION="2.8.x"
     - php: 7.0
@@ -61,10 +59,6 @@ matrix:
     - php: 7.1
       env: SYMFONY_VERSION="3.3.x"
     - php: 7.1
-      env: SYMFONY_VERSION="3.4.x"
-    - php: 7.2
-      env: SYMFONY_VERSION="3.3.x"
-    - php: 7.2
       env: SYMFONY_VERSION="3.4.x"
   allow_failures:
     - php: 7.2
