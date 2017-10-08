@@ -18,6 +18,7 @@ namespace AlexandreT\Bundle\CasGuardBundle\Tests\Security;
 
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
+use AspectMock\Proxy\Verifier;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
@@ -229,6 +230,46 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
+     * Test GetDefaultSuccessRedirectUrl() method.
+     */
+    public function testGetDefaultSuccessRedirectUrl()
+    {
+        $expected = $actual = 'http://example.org/homepage';
+
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('home')
+            ->willReturn($actual);
+
+        $class = new \ReflectionClass($this->guardAuthenticator);
+        $method = $class->getMethod('getDefaultSuccessRedirectUrl');
+        $method->setAccessible(true);
+
+        self::assertEquals($expected, $method->invoke($this->guardAuthenticator));
+    }
+
+    /**
+     * Test GetLoginUrl() method.
+     */
+    public function testGetLoginUrl()
+    {
+        $expected = $actual = 'http://example.org/login';
+
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->with('login')
+            ->willReturn($actual);
+
+        $class = new \ReflectionClass($this->guardAuthenticator);
+        $method = $class->getMethod('getLoginUrl');
+        $method->setAccessible(true);
+
+        self::assertEquals($expected, $method->invoke($this->guardAuthenticator));
+    }
+
+    /**
      * Test SupportsRememberMe() method.
      */
     public function testSupportsRememberMe()
@@ -274,6 +315,7 @@ class CasAuthenticatorTest extends TestCase
             'repository' => 'App:User',
             'route' => [
                 'homepage' => 'home',
+                'login' => 'login',
             ],
             'verbose' => true,
             'version' => CAS_VERSION_3_0,
@@ -314,6 +356,15 @@ class CasAuthenticatorTest extends TestCase
         $this->guardAuthenticator = null;
     }
 
+    /**
+     * Using Aspect::double to Mock PhpCAS.
+     *
+     * What an awesome tool!
+     *
+     * @param array $modification
+     *
+     * @return Verifier
+     */
     private function mockPhpCAS(array $modification = [])
     {
         if (!isset($modification['getUser'])) {
@@ -333,6 +384,9 @@ class CasAuthenticatorTest extends TestCase
         return $phpCas;
     }
 
+    /**
+     * An helper to reload the configuration.
+     */
     private function reloadConfiguration()
     {
         $this->casService = null;

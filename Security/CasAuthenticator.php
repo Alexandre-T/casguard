@@ -223,7 +223,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     protected function getDefaultSuccessRedirectUrl()
     {
-        return $this->router->generate('homepage');
+        return $this->router->generate($this->cas->getRouteHomepage());
     }
 
     /**
@@ -233,9 +233,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     protected function getLoginUrl()
     {
-        $route = $this->cas->getRouteLogin();
-
-        return $this->router->generate($route);
+        return $this->router->generate($this->cas->getRouteLogin());
     }
 
     /**
