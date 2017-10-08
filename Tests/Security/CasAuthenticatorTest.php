@@ -22,11 +22,13 @@ use AspectMock\Proxy\Verifier;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AspectMock\Test as test;
 use phpCas;
@@ -198,6 +200,20 @@ class CasAuthenticatorTest extends TestCase
             ->getMock();
 
         self::assertNull($this->guardAuthenticator->onAuthenticationSuccess(new Request(), $token, 'key'));
+    }
+
+    /**
+     * Test onAuthenticationFailure() method.
+     */
+    public function testOnAuthenticationFailure()
+    {
+        $authenticationException = new AuthenticationException('foo message');
+
+        $response = $this->guardAuthenticator->onAuthenticationFailure(new Request(), $authenticationException);
+
+        self::assertInstanceOf(JsonResponse::class, $response);
+        self::assertEquals(403, $response->getStatusCode());
+        self::assertEquals('{"message":"An authentication exception occurred."}', $response->getContent());
     }
 
     /**
