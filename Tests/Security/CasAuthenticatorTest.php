@@ -111,6 +111,7 @@ class CasAuthenticatorTest extends TestCase
 
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
+        $phpCas['lang'] = test::double('phpCAS', ['setLang' => null]);
         $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
         $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
@@ -121,6 +122,7 @@ class CasAuthenticatorTest extends TestCase
 
         $phpCas['debug']->verifyInvokedOnce('setDebug');
         $phpCas['client']->verifyInvokedOnce('client');
+        $phpCas['lang']->verifyInvokedOnce('setLang');
         $phpCas['verbose']->verifyInvokedOnce('setVerbose');
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
@@ -138,6 +140,7 @@ class CasAuthenticatorTest extends TestCase
     {
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
+        $phpCas['lang'] = test::double('phpCAS', ['setLang' => null]);
         $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
         $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
@@ -149,6 +152,7 @@ class CasAuthenticatorTest extends TestCase
         $phpCas['debug']->verifyInvokedOnce('setDebug');
         $phpCas['client']->verifyInvokedOnce('client');
         $phpCas['verbose']->verifyInvokedOnce('setVerbose');
+        $phpCas['lang']->verifyInvokedOnce('setLang');
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
         $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 1);
@@ -185,6 +189,7 @@ class CasAuthenticatorTest extends TestCase
         $this->configuration = [
             'debug' => 'debug.log',
             'hostname' => 'cas.example.org',
+            'language' => PHPCAS_LANG_FRENCH,
             'port' => 443,
             'verbose' => true,
             'version' => CAS_VERSION_3_0,

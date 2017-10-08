@@ -150,6 +150,7 @@ class ConfigurationTest extends TestCase
                 'homepage' => 'homepage',
                 'login' => 'security_login',
             ],
+            'language' => PHPCAS_LANG_ENGLISH,
         ];
 
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();

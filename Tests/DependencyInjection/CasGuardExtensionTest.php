@@ -98,6 +98,7 @@ class CasGuardExtensionTest extends TestCase
                 'homepage' => 'home',
                 'login' => 'login',
             ],
+            'language' => PHPCAS_LANG_ENGLISH,
         ];
 
         $this->assertTrue($container->hasParameter($this->root));

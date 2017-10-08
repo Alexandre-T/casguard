@@ -43,6 +43,13 @@ interface CasServiceInterface
     public function getHostname();
 
     /**
+     * Return the language for error message.
+     *
+     * @return string
+     */
+    public function getLanguage();
+
+    /**
      * Return the name of the property to retrieve User in its repository.
      *
      * Default value is username, mail could be a good value too.

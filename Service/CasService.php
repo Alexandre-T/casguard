@@ -61,6 +61,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * Return the language for error message.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->getParameter('language');
+    }
+
+    /**
      * Return the property.
      *
      * @return string

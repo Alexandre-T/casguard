@@ -42,36 +42,43 @@ class Configuration implements ConfigurationInterface
                     ->example('phpcas-trace.log')
                     ->info('Enter a filename to trace log or leave empty to use the default filename. Set to false to disable debug function.')
                 ->end()
-                ->booleanNode('verbose')
-                    ->defaultValue(false)
-                    ->example('true')
-                    ->info('If true phpcas trace will be more explicit.')
-                ->end()
                 ->scalarNode('hostname')
                     ->isRequired()
                     ->cannotBeEmpty()
-                    //->example( TODO complete it )
-                    //->info( TODO complete it )
+                    ->example('example.org')
+                    ->info('Enter the hostname of the CAS server.')
+                ->end()
+                ->enumNode('language')
+                    ->values([
+                        /** @see https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 */
+                        PHPCAS_LANG_ENGLISH,
+                        PHPCAS_LANG_FRENCH,
+                        PHPCAS_LANG_GREEK,
+                        PHPCAS_LANG_GERMAN,
+                        PHPCAS_LANG_JAPANESE,
+                        PHPCAS_LANG_SPANISH,
+                        PHPCAS_LANG_CATALAN,
+                        PHPCAS_LANG_CHINESE_SIMPLIFIED,
+                    ])
+                    ->defaultValue(PHPCAS_LANG_ENGLISH)
+                    ->example('CAS_Languages_French')
+                    ->info('Enter the language for phpcas error and trace. Possible value could be read here: https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 .')
                 ->end()
                 ->integerNode('port')
                     ->defaultValue(443)
-                    //->example( TODO complete it )
-                    //->info( TODO complete it )
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
                 ->scalarNode('uri_login')
                     ->isRequired()
                     ->cannotBeEmpty()
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
                 ->scalarNode('url')
                     ->defaultValue('cas/login')
-                ->end()
-                ->enumNode('version')
-                    ->values([
-                        CAS_VERSION_3_0,
-                        CAS_VERSION_2_0,
-                        CAS_VERSION_1_0,
-                    ])
-                    ->defaultValue(CAS_VERSION_3_0)
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
 //                ->scalarNode('ca')
 //                    ->defaultNull()
@@ -87,20 +94,43 @@ class Configuration implements ConfigurationInterface
 //                ->end()
                 ->scalarNode('repository')
                     ->defaultValue('App:User')
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
                 ->scalarNode('property')
                     ->defaultValue('username')
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
                 ->arrayNode('route')
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('homepage')
                             ->defaultValue('homepage')
+                            // TODO ->example('')
+                            // TODO ->info('')
                         ->end()
                         ->scalarNode('login')
                             ->defaultValue('security_login')
+                            // TODO ->example('')
+                            // TODO ->info('')
                         ->end()
                     ->end()
+                ->end()
+                ->booleanNode('verbose')
+                    ->defaultValue(false)
+                    ->example('true')
+                    ->info('If true phpcas trace will be more explicit.')
+                ->end()
+                ->enumNode('version')
+                    ->values([
+                        CAS_VERSION_3_0,
+                        CAS_VERSION_2_0,
+                        CAS_VERSION_1_0,
+                    ])
+                    ->defaultValue(CAS_VERSION_3_0)
+                    // TODO ->example('')
+                    // TODO ->info('')
                 ->end()
             ->end();
 
