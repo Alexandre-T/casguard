@@ -111,6 +111,7 @@ class CasAuthenticatorTest extends TestCase
 
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
+        $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
         $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
         $phpCas['getUser'] = test::double('phpCAS', ['getUser' => $actual]);
@@ -120,6 +121,7 @@ class CasAuthenticatorTest extends TestCase
 
         $phpCas['debug']->verifyInvokedOnce('setDebug');
         $phpCas['client']->verifyInvokedOnce('client');
+        $phpCas['verbose']->verifyInvokedOnce('setVerbose');
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
         $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 2);
@@ -136,6 +138,7 @@ class CasAuthenticatorTest extends TestCase
     {
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
+        $phpCas['verbose'] = test::double('phpCAS', ['setVerbose' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
         $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
         $phpCas['getUser'] = test::double('phpCAS', ['getUser' => null]);
@@ -145,6 +148,7 @@ class CasAuthenticatorTest extends TestCase
 
         $phpCas['debug']->verifyInvokedOnce('setDebug');
         $phpCas['client']->verifyInvokedOnce('client');
+        $phpCas['verbose']->verifyInvokedOnce('setVerbose');
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
         $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 1);
@@ -182,6 +186,7 @@ class CasAuthenticatorTest extends TestCase
             'debug' => 'debug.log',
             'hostname' => 'cas.example.org',
             'port' => 443,
+            'verbose' => true,
             'version' => CAS_VERSION_3_0,
             'uri_login' => '/cas',
         ];

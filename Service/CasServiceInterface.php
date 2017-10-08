@@ -94,6 +94,13 @@ interface CasServiceInterface
     public function getUrl();
 
     /**
+     * Return the verbose mode.
+     *
+     * @return boolean
+     */
+    public function getVerbose();
+
+    /**
      * Return the Cas protocol version used.
      *
      * @return string

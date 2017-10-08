@@ -142,6 +142,7 @@ class ConfigurationTest extends TestCase
             'port' => 443,
             'uri_login' => 'foo',
             'url' => 'cas/login',
+            'verbose' => false,
             'version' => '3.0',
             'repository' => 'App:User',
             'property' => 'username',

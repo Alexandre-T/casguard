@@ -131,6 +131,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * Return the verbose mode.
+     *
+     * @return bool
+     */
+    public function getVerbose()
+    {
+        return $this->getParameter('verbose');
+    }
+
+    /**
      * Return the version.
      *
      * @return string

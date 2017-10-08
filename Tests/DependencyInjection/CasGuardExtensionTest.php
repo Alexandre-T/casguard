@@ -90,6 +90,7 @@ class CasGuardExtensionTest extends TestCase
             'port' => 80,
             'uri_login' => 'http://www.example.org/',
             'url' => 'cas/login/',
+            'verbose' => false,
             'version' => CAS_VERSION_2_0,
             'repository' => 'AppBundle:User',
             'property' => 'mail',
