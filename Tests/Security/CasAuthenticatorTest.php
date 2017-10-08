@@ -229,6 +229,14 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
+     * Test SupportsRememberMe() method.
+     */
+    public function testSupportsRememberMe()
+    {
+        self::assertFalse($this->guardAuthenticator->supportsRememberMe());
+    }
+
+    /**
      * Setup the Phpunit exception before class instantiation.
      */
     public static function setUpBeforeClass()
