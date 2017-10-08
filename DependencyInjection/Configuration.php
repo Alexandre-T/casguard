@@ -37,8 +37,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('phpcas_guard');
         $rootNode
             ->children()
-                ->booleanNode('debug')
-                    ->defaultValue(false)
+                ->scalarNode('debug')
+                    ->defaultValue('')
+                    //->example( TODO complete it )
+                    //->info( TODO complete it )
                 ->end()
                 ->scalarNode('hostname')
                     ->isRequired()

@@ -179,7 +179,7 @@ class CasAuthenticatorTest extends TestCase
         }
 
         $this->configuration = [
-            'debug' => false,
+            'debug' => 'debug.log',
             'hostname' => 'cas.example.org',
             'port' => 443,
             'version' => CAS_VERSION_3_0,

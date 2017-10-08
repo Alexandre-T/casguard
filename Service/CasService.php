@@ -43,7 +43,7 @@ class CasService implements CasServiceInterface
     /**
      * Return true if the internal PhpCAS debug activation tool is on.
      *
-     * @return bool
+     * @return string
      */
     public function getDebug()
     {

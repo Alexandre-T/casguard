@@ -55,7 +55,8 @@ class CasServiceTest extends TestCase
         //Cas Service Creation
         $this->service = new CasService($finalizedConfig);
 
-        self::assertFalse($this->service->getDebug());
+        self::assertEmpty($this->service->getDebug());
+        self::assertInternalType('string', $this->service->getDebug());
         self::assertEquals('example.org', $this->service->getHostname());
         self::assertEquals(443, $this->service->getPort());
         self::assertEquals('foo', $this->service->getUri());

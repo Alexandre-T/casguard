@@ -137,7 +137,7 @@ class ConfigurationTest extends TestCase
             'uri_login' => 'foo',
         ];
         $expected = [
-            'debug' => false,
+            'debug' => '',
             'hostname' => 'example.org',
             'port' => 443,
             'uri_login' => 'foo',
