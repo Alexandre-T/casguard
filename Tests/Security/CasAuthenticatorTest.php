@@ -91,20 +91,20 @@ class CasAuthenticatorTest extends TestCase
     {
         $callback = array($this, 'echoOK');
 
-        $phpCas = test::double('phpCAS', ['setDebug' => $callback()]);
+        $phpCas = test::double('phpCAS', ['setDebug' => $callback('Debug')]);
         phpCAS::setDebug();
         $phpCas->verifyInvoked('setDebug', false);
         self::expectOutputString('YES I CALL THE MOCKED Debug function');
     }
 
     /**
-     * Test the first example in phpcas documentation.
+     * Test the first example in phpcas documentation with a connected user (foo).
      *
      * phpCAS can be used the simplest way, as a CAS client.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
      */
-    public function testExample1()
+    public function testExampleSimple()
     {
         $expected = $actual = 'foo';
 
@@ -122,6 +122,32 @@ class CasAuthenticatorTest extends TestCase
         $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
         $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 2);
+    }
+
+    /**
+     * Test the first example in phpcas documentation with no connected user.
+     *
+     * phpCAS can be used the simplest way, as a CAS client.
+     *
+     * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     */
+    public function testExampleSimpleWithoutUser()
+    {
+
+        $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
+        $phpCas['client'] = test::double('phpCAS', ['client' => null]);
+        $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
+        $phpCas['forceAuthentication'] = test::double('phpCAS', ['forceAuthentication' => null]);
+        $phpCas['getUser'] = test::double('phpCAS', ['getUser' => null]);
+
+        //The first request call credentials and return a user (here this is a string)
+        self::assertNull($this->guardAuthenticator->getCredentials(new Request()));
+
+        $phpCas['debug']->verifyInvokedOnce('setDebug');
+        $phpCas['client']->verifyInvokedOnce('client');
+        $phpCas['setNoCasServerValidation']->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas['forceAuthentication']->verifyInvokedOnce('forceAuthentication');
+        $phpCas['getUser']->verifyInvokedMultipleTimes('getUser', 1);
     }
 
     /**
@@ -195,9 +221,9 @@ class CasAuthenticatorTest extends TestCase
      *
      * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
      */
-    private function echoOK()
+    private function echoOK($function)
     {
         //Serialization of 'Closure' is not allowed in PHP 5.6
-        echo 'YES I CALL THE MOCKED Debug function';
+        echo "YES I CALL THE MOCKED $function function";
     }
 }
