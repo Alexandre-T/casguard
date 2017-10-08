@@ -19,6 +19,7 @@ namespace AlexandreT\Bundle\CasGuardBundle\Tests\Security;
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -27,6 +28,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AspectMock\Test as test;
 use phpCas;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * CasAuthenticatorTest class.
@@ -66,7 +68,7 @@ class CasAuthenticatorTest extends TestCase
     private $router;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var CasService
      */
     private $casService;
 
@@ -75,6 +77,7 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testCheckCredentials()
     {
+        /** @var UserInterface $user Mocked user interface */
         $user = $this->getMockBuilder(UserInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -155,6 +158,35 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
+     * Test getuser method().
+     */
+    public function testGetUser()
+    {
+        $expected = $actual = 'toto';
+
+        $entityRepository = $this->getMockBuilder(EntityRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->entityManager
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with($this->casService->getRepository())
+            ->willReturn($entityRepository);
+
+        $entityRepository
+            ->expects($this->once())
+            ->method('findOneBy')
+            ->with([$this->casService->getProperty() => 'foo'])
+            ->willReturn($actual);
+
+        $user = $this->getMockBuilder(UserProviderInterface::class)
+            ->getMock();
+
+        self::assertEquals($expected, $this->guardAuthenticator->getUser('foo', $user));
+    }
+
+    /**
      * Setup the Phpunit exception before class instantiation.
      */
     public static function setUpBeforeClass()
@@ -188,6 +220,8 @@ class CasAuthenticatorTest extends TestCase
             'hostname' => 'cas.example.org',
             'language' => PHPCAS_LANG_FRENCH,
             'port' => 443,
+            'property' => 'mail',
+            'repository' => 'App:User',
             'verbose' => true,
             'version' => CAS_VERSION_3_0,
             'uri_login' => '/cas',
@@ -196,8 +230,12 @@ class CasAuthenticatorTest extends TestCase
         $this->entityManager = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
-        $this->router = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $this->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->router = $this->getMockBuilder(RouterInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->casService = new CasService($this->configuration);
 
         $this->guardAuthenticator = new CasAuthenticator(

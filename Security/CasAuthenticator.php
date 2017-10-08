@@ -134,7 +134,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        //FIXME use user provider interface
+        //TODO try to use user provider interface
         $repository = $this->em->getRepository($this->cas->getRepository());
 
         return $repository->findOneBy([
