@@ -41,6 +41,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * Return the certificate used to communicate with CAS server.
+     *
+     * @return string
+     */
+    public function getCertificate()
+    {
+        return $this->getParameter('certificate');
+    }
+
+    /**
      * Return true if the internal PhpCAS debug activation tool is on.
      *
      * @return string
@@ -158,6 +168,14 @@ class CasService implements CasServiceInterface
     public function getVersion()
     {
         return $this->getParameter('version');
+    }
+
+    /**
+     * Return true if a certificate is used to communicate with the CAS server.
+     */
+    public function hasCertificate()
+    {
+        return false != $this->getParameter('certificate');
     }
 
     /**

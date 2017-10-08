@@ -85,6 +85,7 @@ class CasGuardExtensionTest extends TestCase
         );
 
         $expected = [
+            'certificate' => false,
             'debug' => true,
             'hostname' => 'example.org',
             'port' => 80,

@@ -137,6 +137,7 @@ class ConfigurationTest extends TestCase
             'uri_login' => 'foo',
         ];
         $expected = [
+            'certificate' => false,
             'debug' => '',
             'hostname' => 'example.org',
             'port' => 443,

@@ -42,20 +42,11 @@ class CasServiceTest extends TestCase
      */
     public function testService()
     {
-        $config = new Configuration();
-        $actual = [
-            'hostname' => 'example.org',
-            'uri_login' => 'foo',
-        ];
-
-        $node = $config->getConfigTreeBuilder()->buildTree();
-        $normalizedConfig = $node->normalize($actual);
-        $finalizedConfig = $node->finalize($normalizedConfig);
-
         //Cas Service Creation
-        $this->service = new CasService($finalizedConfig);
+        $this->service = new CasService($this->loadConfiguration());
 
         self::assertEmpty($this->service->getDebug());
+        self::assertFalse($this->service->getCertificate());
         self::assertInternalType('string', $this->service->getDebug());
         self::assertEquals('example.org', $this->service->getHostname());
         self::assertEquals(PHPCAS_LANG_ENGLISH, $this->service->getLanguage());
@@ -67,6 +58,38 @@ class CasServiceTest extends TestCase
         self::assertEquals('foo', $this->service->getUri());
         self::assertEquals('cas/login', $this->service->getUrl());
         self::assertFalse($this->service->getVerbose());
+        self::assertFalse($this->service->hasCertificate());
         self::assertEquals('3.0', $this->service->getVersion());
+    }
+
+    public function testHasCertificate()
+    {
+        $this->service = new CasService($this->loadConfiguration());
+        self::assertFalse($this->service->hasCertificate());
+
+        $this->service = new CasService($this->loadConfiguration(['certificate' => 'certificate.txt']));
+
+        self::assertTrue($this->service->hasCertificate());
+    }
+
+    /**
+     * Load configuration.
+     *
+     * @param array $actual
+     *
+     * @return mixed
+     */
+    private function loadConfiguration(array $actual = [])
+    {
+        $config = new Configuration();
+        $actual = array_merge($actual, [
+            'hostname' => 'example.org',
+            'uri_login' => 'foo',
+        ]);
+
+        $node = $config->getConfigTreeBuilder()->buildTree();
+        $normalizedConfig = $node->normalize($actual);
+
+        return $node->finalize($normalizedConfig);
     }
 }

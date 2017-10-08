@@ -37,6 +37,11 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('phpcas_guard');
         $rootNode
             ->children()
+                ->scalarNode('certificate')
+                    ->defaultFalse()
+                    ->example('certificate path')
+                    ->info('Enter the certificate to identify the CAS server. Set to false if you do not use it. In production, you must use one.')
+                ->end()
                 ->scalarNode('debug')
                     ->defaultValue('')
                     ->example('phpcas-trace.log')
@@ -50,7 +55,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->enumNode('language')
                     ->values([
-                        /** @see https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 */
+                        /* @see https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 */
                         PHPCAS_LANG_ENGLISH,
                         PHPCAS_LANG_FRENCH,
                         PHPCAS_LANG_GREEK,

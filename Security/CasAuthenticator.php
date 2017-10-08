@@ -105,9 +105,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
             $this->cas->getUri()
         );
 
-        //FIXME add a test
-        //phpCAS::setCasServerCACert($mon_certificat);
-        phpCAS::setNoCasServerValidation();
+        if ($this->cas->hasCertificate()) {
+            phpCAS::setCasServerCACert($this->cas->getCertificate());
+        } else {
+            phpCAS::setNoCasServerValidation();
+        }
 
         //FIXME Understand this line and add a test
         //phpCAS::handleLogoutRequests();
@@ -123,7 +125,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     }
 
     /**
-     * getUser function.
+     * Return the user from application.
      *
      * @param string                $credentials
      * @param UserProviderInterface $userProvider
@@ -132,6 +134,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        //FIXME use user provider interface
         $repository = $this->em->getRepository($this->cas->getRepository());
 
         return $repository->findOneBy([
@@ -140,10 +143,14 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     }
 
     /**
+     * Check credentials.
+     *
+     * Credentials are always returning true, because authentication is done by CAS.
+     *
      * @param mixed         $credentials
      * @param UserInterface $user
      *
-     * @return bool
+     * @return bool true
      */
     public function checkCredentials($credentials, UserInterface $user)
     {

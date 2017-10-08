@@ -109,7 +109,13 @@ class CasAuthenticatorTest extends TestCase
     {
         $expected = $actual = 'foo';
 
-        $phpCas = $this->mockPhpCAS(['getUser' => $actual]);
+        $this->configuration['certificate'] = 'certificate.txt'; //we use a certificate
+
+        $this->reloadConfiguration();
+
+        $phpCas = $this->mockPhpCAS([
+            'getUser' => $actual, //we return a user
+        ]);
 
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
@@ -118,7 +124,8 @@ class CasAuthenticatorTest extends TestCase
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
-        $phpCas->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas->verifyInvokedOnce('setCasServerCACert');
+        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
         $phpCas->verifyInvokedOnce('forceAuthentication');
         $phpCas->verifyInvokedMultipleTimes('getUser', 2);
     }
@@ -142,6 +149,7 @@ class CasAuthenticatorTest extends TestCase
         $phpCas->verifyInvokedOnce('setVerbose');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas->verifyNeverInvoked('setCasServerCACert');
         $phpCas->verifyInvokedOnce('forceAuthentication');
         $phpCas->verifyInvokedMultipleTimes('getUser', 1);
     }
@@ -175,6 +183,7 @@ class CasAuthenticatorTest extends TestCase
         }
 
         $this->configuration = [
+            'certificate' => false,
             'debug' => 'debug.log',
             'hostname' => 'cas.example.org',
             'language' => PHPCAS_LANG_FRENCH,
@@ -214,21 +223,34 @@ class CasAuthenticatorTest extends TestCase
         $this->guardAuthenticator = null;
     }
 
-    /**
-     *
-     */
     private function mockPhpCAS(array $modification = [])
     {
-        if (! isset($modification['getUser'])) $modification['getUser'] = null;
+        if (!isset($modification['getUser'])) {
+            $modification['getUser'] = null;
+        }
 
         test::double('phpCAS', ['setDebug' => null]);
         test::double('phpCAS', ['client' => null]);
         test::double('phpCAS', ['setLang' => null]);
         test::double('phpCAS', ['setVerbose' => null]);
-        test::double('phpCAS', ['setNoCasServerValidation' => null]);
         test::double('phpCAS', ['forceAuthentication' => null]);
+        test::double('phpCAS', ['setCasServerCACert' => null]);
+        test::double('phpCAS', ['setNoCasServerValidation' => null]);
         $phpCas = test::double('phpCAS', ['getUser' => $modification['getUser']]);
 
         return $phpCas;
+    }
+
+    private function reloadConfiguration()
+    {
+        $this->casService = null;
+        $this->casService = new CasService($this->configuration);
+
+        $this->guardAuthenticator = new CasAuthenticator(
+            $this->entityManager,
+            $this->tokenStorage,
+            $this->router,
+            $this->casService
+        );
     }
 }

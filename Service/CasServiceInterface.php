@@ -27,6 +27,13 @@ namespace AlexandreT\Bundle\CasGuardBundle\Service;
 interface CasServiceInterface
 {
     /**
+     * Return the certificate used to communicate with CAS server.
+     *
+     * @return string
+     */
+    public function getCertificate();
+
+    /**
      * Return true if debugging mode is enabled.
      *
      * Default value must be false.
@@ -103,7 +110,7 @@ interface CasServiceInterface
     /**
      * Return the verbose mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function getVerbose();
 
@@ -113,4 +120,11 @@ interface CasServiceInterface
      * @return string
      */
     public function getVersion();
+
+    /**
+     * Return true if a certificate is used to communicate with CAS server.
+     *
+     * @return bool
+     */
+    public function hasCertificate();
 }
