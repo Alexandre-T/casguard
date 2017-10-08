@@ -212,7 +212,7 @@ class CasService implements CasServiceInterface
         }
 
         if (!key_exists($key, $this->configuration['route'])) {
-            throw new CasException(sprintf('The %s parameter must be defined. It is missing.', $key));
+            throw new CasException(sprintf('The %s sub-parameter of route parameter must be defined. It is missing.', $key));
         }
 
         return $this->configuration['route'][$key];

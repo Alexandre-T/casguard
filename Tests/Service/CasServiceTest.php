@@ -17,6 +17,7 @@
 namespace AlexandreT\Bundle\CasGuardBundle\Tests\Service;
 
 use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
+use AlexandreT\Bundle\CasGuardBundle\Exception\CasException;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use PHPUnit\Framework\TestCase;
 
@@ -62,6 +63,9 @@ class CasServiceTest extends TestCase
         self::assertEquals('3.0', $this->service->getVersion());
     }
 
+    /**
+     * Test hasCertificate() method.
+     */
     public function testHasCertificate()
     {
         $this->service = new CasService($this->loadConfiguration());
@@ -70,6 +74,91 @@ class CasServiceTest extends TestCase
         $this->service = new CasService($this->loadConfiguration(['certificate' => 'certificate.txt']));
 
         self::assertTrue($this->service->hasCertificate());
+    }
+
+    /**
+     * test private getParameter() method with reflection class.
+     */
+    public function testPrivateGetParameter()
+    {
+        $casService = new CasService(['foo' => 'bar']);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getParameter');
+        $method->setAccessible(true);
+        $output = $method->invoke($casService, 'foo');
+
+        self::assertEquals('bar', $output);
+    }
+
+    /**
+     * test private getParameter() method with reflection class and a non-existent parameter.
+     */
+    public function testPrivateGetNonExistentParameter()
+    {
+        self::expectException(CasException::class);
+        self::expectExceptionMessage('The non-existent parameter must be defined. It is missing.');
+
+        $casService = new CasService(['foo' => 'bar']);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getParameter');
+        $method->setAccessible(true);
+        $method->invoke($casService, 'non-existent');
+    }
+
+    /**
+     * test private getRouteParameter() method with reflection class.
+     */
+    public function testPrivateGetRouteParameter()
+    {
+        $casService = new CasService([
+            'route' => [
+                'foo' => 'bar',
+            ],
+        ]);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getRouteParameter');
+        $method->setAccessible(true);
+        $output = $method->invoke($casService, 'foo');
+
+        self::assertEquals('bar', $output);
+    }
+
+    /**
+     * test private getParameter() method with reflection class and a non-existent parameter.
+     */
+    public function testPrivateGetNonExistentRouteParameter()
+    {
+        self::expectException(CasException::class);
+        self::expectExceptionMessage('The route parameter must be defined. It is missing.');
+
+        $casService = new CasService([
+            'foo2' => [
+                'foo' => 'bar',
+            ],
+        ]);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getRouteParameter');
+        $method->setAccessible(true);
+        $method->invoke($casService, 'non-existent');
+    }
+
+    /**
+     * test private getParameter() method with reflection class and a non-existent parameter.
+     */
+    public function testPrivateGetNonExistentRouteSubParameter()
+    {
+        self::expectException(CasException::class);
+        self::expectExceptionMessage('The non-existent sub-parameter of route parameter must be defined. It is missing.');
+
+        $casService = new CasService([
+            'route' => [
+                'foo' => 'bar',
+            ],
+        ]);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getRouteParameter');
+        $method->setAccessible(true);
+        $method->invoke($casService, 'non-existent');
     }
 
     /**
