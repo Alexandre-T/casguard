@@ -31,7 +31,7 @@ interface CasServiceInterface
      *
      * Default value must be false.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDebug();
 

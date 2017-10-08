@@ -84,6 +84,7 @@ class CasAuthenticatorTest extends TestCase
 
     /**
      * This is a test to validate AspectMock configuration.
+     *
      * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
      */
     public function testAspectMock()
@@ -175,7 +176,7 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
-     * Tears down the fixture, for example, close a network connection.
+     * Tears down the fixture and clean the double.
      * This method is called after a test is executed.
      */
     protected function tearDown()

@@ -145,7 +145,7 @@ class CasService implements CasServiceInterface
      *
      * @param $key
      *
-     * @throws CasException when $key is not a valid parameter.
+     * @throws CasException when $key is not a valid parameter
      *
      * @return mixed
      */
@@ -163,7 +163,7 @@ class CasService implements CasServiceInterface
      *
      * @param $key
      *
-     * @throws CasException when $key is not a valid parameter.
+     * @throws CasException when $key is not a valid parameter
      *
      * @return string
      */
