@@ -89,9 +89,10 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testAspectMock()
     {
-        $callback = array($this, 'echoOK');
+        $phpCas = test::double('phpCAS', ['setDebug' => function () {
+            echo 'YES I CALL THE MOCKED Debug function';
+        }]);
 
-        $phpCas = test::double('phpCAS', ['setDebug' => $callback('Debug')]);
         phpCAS::setDebug();
         $phpCas->verifyInvoked('setDebug', false);
         self::expectOutputString('YES I CALL THE MOCKED Debug function');
@@ -133,7 +134,6 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testExampleSimpleWithoutUser()
     {
-
         $phpCas['debug'] = test::double('phpCAS', ['setDebug' => null]);
         $phpCas['client'] = test::double('phpCAS', ['client' => null]);
         $phpCas['setNoCasServerValidation'] = test::double('phpCAS', ['setNoCasServerValidation' => null]);
@@ -214,16 +214,5 @@ class CasAuthenticatorTest extends TestCase
         $this->router = null;
         $this->casService = null;
         $this->guardAuthenticator = null;
-    }
-
-    /**
-     * Echo a string.
-     *
-     * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
-     */
-    private function echoOK($function)
-    {
-        //Serialization of 'Closure' is not allowed in PHP 5.6
-        echo "YES I CALL THE MOCKED $function function";
     }
 }
