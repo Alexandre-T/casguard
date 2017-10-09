@@ -78,7 +78,7 @@ class Configuration implements ConfigurationInterface
                         self::PHPCAS_LANG_CATALAN,
                         self::PHPCAS_LANG_CHINESE_SIMPLIFIED,
                     ])
-                    ->defaultValue(PHPCAS_LANG_ENGLISH)
+                    ->defaultValue(self::PHPCAS_LANG_ENGLISH)
                     ->example('CAS_Languages_French')
                     ->info('Enter the language for phpcas error and trace. Possible value could be read here: https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 .')
                 ->end()
