@@ -79,6 +79,11 @@ class CasGuardExtensionTest extends TestCase
                         'homepage' => 'home',
                         'login' => 'login',
                     ],
+                    'logout' => [
+                        'supported' => true,
+                        'handled' => true,
+                        'allowed_clients' => ['foo', 'bar'],
+                    ],
                 ],
             ],
             $container = $this->getContainer()
@@ -100,6 +105,14 @@ class CasGuardExtensionTest extends TestCase
                 'login' => 'login',
             ],
             'language' => PHPCAS_LANG_ENGLISH,
+            'logout' => [
+                'supported' => true,
+                'handled' => true,
+                'allowed_clients' => [
+                    0 => 'foo',
+                    1 => 'bar',
+                ],
+            ],
         ];
 
         $this->assertTrue($container->hasParameter($this->root));

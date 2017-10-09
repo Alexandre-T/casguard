@@ -27,6 +27,13 @@ namespace AlexandreT\Bundle\CasGuardBundle\Service;
 interface CasServiceInterface
 {
     /**
+     * Return an array of host names allowed to send logout requests.
+     *
+     * @return array|null
+     */
+    public function getAllowedClients();
+
+    /**
      * Return the certificate used to communicate with CAS server.
      *
      * @return string
@@ -127,4 +134,20 @@ interface CasServiceInterface
      * @return bool
      */
     public function hasCertificate();
+
+    /**
+     * Is the Cas Server Supporting the Single Sign Out Signal?
+     *
+     * @see https://wiki.jasig.org/display/CASUM/Single+Sign+Out
+     *
+     * @return bool
+     */
+    public function isSupportingSingleSignOutSignal();
+
+    /**
+     * The server is supporting single sign ou signal, but is this application using it?
+     *
+     * @return bool
+     */
+    public function isHandleLogoutRequest();
 }

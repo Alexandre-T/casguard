@@ -112,8 +112,14 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
             phpCAS::setNoCasServerValidation();
         }
 
-        //FIXME Understand this line and add a test
-        //phpCAS::handleLogoutRequests();
+        /* @see https://wiki.jasig.org/display/CASC/phpCAS+examples#phpCASexamples-HandlelogoutrequestsfromtheCASserver */
+        if ($this->cas->isSupportingSingleSignOutSignal()) {
+            if (count($this->cas->getAllowedClients())) {
+                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $this->cas->getAllowedClients());
+            } else {
+                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest());
+            }
+        }
 
         phpCAS::forceAuthentication();
 
@@ -199,7 +205,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
         $data = array(
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         );
-
+        //FIXME Why a Json Response?
         return new JsonResponse($data, 403);
     }
 

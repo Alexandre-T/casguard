@@ -162,6 +162,44 @@ class CasServiceTest extends TestCase
     }
 
     /**
+     * test private getParameter() method with reflection class and a non-existent parameter.
+     */
+    public function testPrivateGetNonExistentLogoutParameter()
+    {
+        self::expectException(CasException::class);
+        self::expectExceptionMessage('The logout parameter must be defined. It is missing.');
+
+        $casService = new CasService([
+            'foo2' => [
+                'foo' => 'bar',
+            ],
+        ]);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getLogoutParameter');
+        $method->setAccessible(true);
+        $method->invoke($casService, 'non-existent');
+    }
+
+    /**
+     * test private getParameter() method with reflection class and a non-existent parameter.
+     */
+    public function testPrivateGetNonExistentLogoutSubParameter()
+    {
+        self::expectException(CasException::class);
+        self::expectExceptionMessage('The non-existent sub-parameter of logout parameter must be defined. It is missing.');
+
+        $casService = new CasService([
+            'logout' => [
+                'foo' => 'bar',
+            ],
+        ]);
+        $class = new \ReflectionClass($casService);
+        $method = $class->getMethod('getLogoutParameter');
+        $method->setAccessible(true);
+        $method->invoke($casService, 'non-existent');
+    }
+
+    /**
      * Load configuration.
      *
      * @param array $actual

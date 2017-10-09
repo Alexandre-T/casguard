@@ -117,6 +117,9 @@ class CasAuthenticatorTest extends TestCase
         $expected = $actual = 'foo';
 
         $this->configuration['certificate'] = 'certificate.txt'; //we use a certificate
+        $this->configuration['logout']['supported'] = true; //we use single sign out signal
+        $this->configuration['logout']['handled'] = true; //we use single sign out signal
+        $this->configuration['logout']['allowed_clients'] = ['foo', 'bar']; //we use single sign out signal
 
         $this->reloadConfiguration();
 
@@ -132,8 +135,44 @@ class CasAuthenticatorTest extends TestCase
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
         $phpCas->verifyInvokedOnce('setCasServerCACert');
-        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
         $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedOnce('handleLogoutRequests');
+        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
+        $phpCas->verifyInvokedMultipleTimes('getUser', 2);
+    }
+
+    /**
+     * Test the first example in phpcas documentation with a connected user (foo).
+     *
+     * In this test the server supports SSOS but it is not used.
+     *
+     * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     */
+    public function testExampleSingleSignOutRefused()
+    {
+        $expected = $actual = 'foo';
+
+        $this->configuration['logout']['supported'] = true; //we use single sign out signal
+        $this->configuration['logout']['handled'] = false; //we use single sign out signal
+        $this->configuration['logout']['allowed_clients'] = null; //we use single sign out signal
+
+        $this->reloadConfiguration();
+
+        $phpCas = $this->mockPhpCAS([
+            'getUser' => $actual, //we return a user
+        ]);
+
+        //The first request call credentials and return a user (here this is a string)
+        self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
+
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedOnce('handleLogoutRequests');
+        $phpCas->verifyInvokedOnce('setNoCasServerValidation');
+        $phpCas->verifyNeverInvoked('setCasServerCACert');
         $phpCas->verifyInvokedMultipleTimes('getUser', 2);
     }
 
@@ -158,6 +197,7 @@ class CasAuthenticatorTest extends TestCase
         $phpCas->verifyInvokedOnce('setNoCasServerValidation');
         $phpCas->verifyNeverInvoked('setCasServerCACert');
         $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyNeverInvoked('handleLogoutRequests');
         $phpCas->verifyInvokedMultipleTimes('getUser', 1);
     }
 
@@ -239,6 +279,7 @@ class CasAuthenticatorTest extends TestCase
         $phpCas->verifyNeverInvoked('setNoCasServerValidation');
         $phpCas->verifyNeverInvoked('setCasServerCACert');
         $phpCas->verifyNeverInvoked('forceAuthentication');
+        $phpCas->verifyNeverInvoked('handleLogoutRequests');
         $phpCas->verifyNeverInvoked('getUser');
 
         self::assertEquals(302, $response->getStatusCode());
@@ -336,6 +377,10 @@ class CasAuthenticatorTest extends TestCase
             'verbose' => true,
             'version' => CAS_VERSION_3_0,
             'uri_login' => '/cas',
+            'logout' => [
+                'supported' => false,
+                'handled' => false,
+            ],
         ];
 
         $this->entityManager = $this->getMockBuilder(EntityManager::class)
@@ -391,6 +436,7 @@ class CasAuthenticatorTest extends TestCase
         test::double('phpCAS', ['client' => null]);
         test::double('phpCAS', ['setLang' => null]);
         test::double('phpCAS', ['forceAuthentication' => null]);
+        test::double('phpCAS', ['handleLogoutRequests' => null]);
         test::double('phpCAS', ['logout' => null]);
         test::double('phpCAS', ['setCasServerCACert' => null]);
         test::double('phpCAS', ['setNoCasServerValidation' => null]);

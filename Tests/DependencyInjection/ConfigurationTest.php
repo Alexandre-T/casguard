@@ -135,6 +135,12 @@ class ConfigurationTest extends TestCase
         $actual = [
             'hostname' => 'example.org',
             'uri_login' => 'foo',
+            'logout' => [
+                'allowed_clients' => [
+                    0 => 'example1.org',
+                    1 => 'example2.org',
+                ],
+            ],
         ];
         $expected = [
             'certificate' => false,
@@ -152,6 +158,14 @@ class ConfigurationTest extends TestCase
                 'login' => 'security_login',
             ],
             'language' => PHPCAS_LANG_ENGLISH,
+            'logout' => [
+                'supported' => true,
+                'handled' => true,
+                'allowed_clients' => [
+                    'example1.org',
+                    'example2.org',
+                ],
+            ],
         ];
 
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
