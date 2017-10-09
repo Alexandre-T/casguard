@@ -16,6 +16,7 @@
 
 namespace AlexandreT\Bundle\CasGuardBundle\Tests\Security;
 
+use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
@@ -366,7 +367,7 @@ class CasAuthenticatorTest extends TestCase
             'certificate' => false,
             'debug' => 'debug.log',
             'hostname' => 'cas.example.org',
-            'language' => PHPCAS_LANG_FRENCH,
+            'language' => Configuration::PHPCAS_LANG_FRENCH,
             'port' => 443,
             'property' => 'mail',
             'repository' => 'App:User',
@@ -375,7 +376,7 @@ class CasAuthenticatorTest extends TestCase
                 'login' => 'login',
             ],
             'verbose' => true,
-            'version' => CAS_VERSION_3_0,
+            'version' => Configuration::CAS_VERSION_3_0,
             'uri_login' => '/cas',
             'logout' => [
                 'supported' => false,

@@ -26,6 +26,19 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    const PHPCAS_LANG_ENGLISH = 'CAS_Languages_English';
+    const PHPCAS_LANG_FRENCH = 'CAS_Languages_French';
+    const PHPCAS_LANG_GREEK = 'CAS_Languages_Greek';
+    const PHPCAS_LANG_GERMAN = 'CAS_Languages_German';
+    const PHPCAS_LANG_JAPANESE = 'CAS_Languages_Japanese';
+    const PHPCAS_LANG_SPANISH = 'CAS_Languages_Spanish';
+    const PHPCAS_LANG_CATALAN = 'CAS_Languages_Catalan';
+    const PHPCAS_LANG_CHINESE_SIMPLIFIED = 'CAS_Languages_ChineseSimplified';
+
+    const CAS_VERSION_3_0 = '3.0';
+    const CAS_VERSION_2_0 = '2.0';
+    const CAS_VERSION_1_0 = '1.0';
+
     /**
      * Generates the configuration tree builder.
      *
@@ -56,14 +69,14 @@ class Configuration implements ConfigurationInterface
                 ->enumNode('language')
                     ->values([
                         /* @see https://github.com/apereo/phpCAS/blob/master/source/CAS.php#L215 */
-                        PHPCAS_LANG_ENGLISH,
-                        PHPCAS_LANG_FRENCH,
-                        PHPCAS_LANG_GREEK,
-                        PHPCAS_LANG_GERMAN,
-                        PHPCAS_LANG_JAPANESE,
-                        PHPCAS_LANG_SPANISH,
-                        PHPCAS_LANG_CATALAN,
-                        PHPCAS_LANG_CHINESE_SIMPLIFIED,
+                        self::PHPCAS_LANG_ENGLISH,
+                        self::PHPCAS_LANG_FRENCH,
+                        self::PHPCAS_LANG_GREEK,
+                        self::PHPCAS_LANG_GERMAN,
+                        self::PHPCAS_LANG_JAPANESE,
+                        self::PHPCAS_LANG_SPANISH,
+                        self::PHPCAS_LANG_CATALAN,
+                        self::PHPCAS_LANG_CHINESE_SIMPLIFIED,
                     ])
                     ->defaultValue(PHPCAS_LANG_ENGLISH)
                     ->example('CAS_Languages_French')
@@ -118,11 +131,11 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->enumNode('version')
                     ->values([
-                        CAS_VERSION_3_0,
-                        CAS_VERSION_2_0,
-                        CAS_VERSION_1_0,
+                        self::CAS_VERSION_3_0,
+                        self::CAS_VERSION_2_0,
+                        self::CAS_VERSION_1_0,
                     ])
-                    ->defaultValue(CAS_VERSION_3_0)
+                    ->defaultValue(self::CAS_VERSION_3_0)
                     ->example('3.0')
                     ->info('Version of the CAS Server.')
                 ->end()

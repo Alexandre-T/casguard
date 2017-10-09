@@ -157,7 +157,7 @@ class ConfigurationTest extends TestCase
                 'homepage' => 'homepage',
                 'login' => 'security_login',
             ],
-            'language' => PHPCAS_LANG_ENGLISH,
+            'language' => Configuration::PHPCAS_LANG_ENGLISH,
             'logout' => [
                 'supported' => true,
                 'handled' => true,
