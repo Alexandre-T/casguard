@@ -98,13 +98,13 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     {
         phpCAS::setDebug($this->cas->getDebug());
         phpCAS::setVerbose($this->cas->getVerbose());
-        phpCAS::setLang($this->cas->getLanguage());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),
             $this->cas->getPort(),
             $this->cas->getUri()
         );
+        phpCAS::setLang($this->cas->getLanguage());
 
         if ($this->cas->hasCertificate()) {
             phpCAS::setCasServerCACert($this->cas->getCertificate());
@@ -265,13 +265,13 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     {
         phpCAS::setDebug($this->cas->getDebug());
         phpCAS::setVerbose($this->cas->getVerbose());
-        phpCAS::setLang($this->cas->getLanguage());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),
             $this->cas->getPort(),
             $this->cas->getUri()
         );
+        phpCAS::setLang($this->cas->getLanguage());
         phpCAS::logout();
 
         $uri = $this->router->generate(
