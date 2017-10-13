@@ -176,7 +176,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        //TODO add a flashbag message?
         return null;
     }
 
@@ -196,11 +195,10 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        //TODO Add a flashbag message.
         $data = array(
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         );
-        //FIXME Why a Json Response?
+
         return new JsonResponse($data, 403);
     }
 
