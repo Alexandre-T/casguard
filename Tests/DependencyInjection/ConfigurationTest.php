@@ -21,6 +21,14 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
+/**
+ * Configuration class test.
+ *
+ * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ *
+ * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
+ * @license MIT
+ */
 class ConfigurationTest extends TestCase
 {
     /**
@@ -44,7 +52,7 @@ class ConfigurationTest extends TestCase
     public function testUndefinedConfigTreeBuilder()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The child node "hostname" at path "phpcas_guard" must be configured.');
+        self::expectExceptionMessage('The child node "hostname" at path "cas_guard" must be configured.');
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([]);
         $node->finalize($normalizedConfig);
@@ -56,7 +64,7 @@ class ConfigurationTest extends TestCase
     public function testEmptyConfigTreeBuilder()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The path "phpcas_guard.hostname" cannot contain an empty value, but got "".');
+        self::expectExceptionMessage('The path "cas_guard.hostname" cannot contain an empty value, but got "".');
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
             'hostname' => '', //empty
@@ -70,7 +78,7 @@ class ConfigurationTest extends TestCase
     public function testUndefinedLoginConfigTreeBuilder()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The child node "uri_login" at path "phpcas_guard" must be configured.');
+        self::expectExceptionMessage('The child node "uri_login" at path "cas_guard" must be configured.');
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
             'hostname' => 'foo.example.org',
@@ -84,7 +92,7 @@ class ConfigurationTest extends TestCase
     public function testEmptyLoginConfigTreeBuilder()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The path "phpcas_guard.uri_login" cannot contain an empty value, but got "".');
+        self::expectExceptionMessage('The path "cas_guard.uri_login" cannot contain an empty value, but got "".');
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
             'hostname' => 'foo.example.org',
@@ -99,7 +107,7 @@ class ConfigurationTest extends TestCase
     public function testGetConfigWithWrongKey()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('Unrecognized option "foo" under "phpcas_guard"');
+        self::expectExceptionMessage('Unrecognized option "foo" under "cas_guard"');
 
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
@@ -116,7 +124,7 @@ class ConfigurationTest extends TestCase
     public function testGetConfigWithWrongValues()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The value "foo" is not allowed for path "phpcas_guard.version". Permissible values: "3.0", "2.0", "1.0"');
+        self::expectExceptionMessage('The value "foo" is not allowed for path "cas_guard.version". Permissible values: "3.0", "2.0", "1.0"');
 
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([

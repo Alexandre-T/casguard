@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('phpcas_guard');
+        $rootNode = $treeBuilder->root('cas_guard');
         $rootNode
             ->children()
                 ->scalarNode('certificate')
