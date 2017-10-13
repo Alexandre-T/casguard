@@ -328,7 +328,7 @@ class CasAuthenticatorTest extends TestCase
         $phpCas = $this->mockPhpCAS();
 
         $this->router
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('generate')
             ->with('home')
             ->willReturn('http://www.example.org/foo/home');
@@ -358,7 +358,7 @@ class CasAuthenticatorTest extends TestCase
         $expected = $actual = 'http://example.org/homepage';
 
         $this->router
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('generate')
             ->with('home')
             ->willReturn($actual);
@@ -378,7 +378,7 @@ class CasAuthenticatorTest extends TestCase
         $expected = $actual = 'http://example.org/login';
 
         $this->router
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('generate')
             ->with('login')
             ->willReturn($actual);
