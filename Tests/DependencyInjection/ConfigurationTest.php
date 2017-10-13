@@ -20,6 +20,7 @@ namespace AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection;
 use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Dumper\YamlReferenceDumper;
 
 /**
  * Configuration class test.
@@ -44,6 +45,19 @@ class ConfigurationTest extends TestCase
     protected function setUp()
     {
         $this->configuration = new Configuration();
+    }
+
+    /**
+     * Test the dump!
+     */
+    public function testDump()
+    {
+        $expected =  str_replace("\r\n", "\n", file_get_contents(__DIR__ . '/../../Resources/doc/configuration_sample.yaml'));
+        $dumper = new YamlReferenceDumper();
+
+        $actual = $dumper->dump($this->configuration);
+
+        self::assertEquals($expected, $actual);
     }
 
     /**

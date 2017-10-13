@@ -141,6 +141,8 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('logout')
                     ->addDefaultsIfNotSet()
+                    //TODO Test : can be unset
+                    ->canBeUnset()
                     ->children()
                         ->booleanNode('supported')
                             ->defaultTrue()
