@@ -214,6 +214,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
+        //The URL have to be completed by the current request uri,
+        // because Cas Server need to know where redirect user after authentication.
         return new RedirectResponse($this->cas->getUri().$request->getUri());
     }
 
