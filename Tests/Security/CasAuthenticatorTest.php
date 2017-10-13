@@ -33,6 +33,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use AspectMock\Test as test;
 use phpCas;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * CasAuthenticatorTest class.
@@ -395,6 +396,26 @@ class CasAuthenticatorTest extends TestCase
     public function testSupportsRememberMe()
     {
         self::assertFalse($this->guardAuthenticator->supportsRememberMe());
+    }
+
+    /**
+     * Test start() method.
+     */
+    public function testStart()
+    {
+        /** @var Request|PHPUnit_Framework_MockObject_MockObject $request */
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects(self::once())
+            ->method('getUri')
+            ->willReturn('foo');
+
+        $expected = $this->casService->getUri().'foo';
+        $actual = $this->guardAuthenticator->start($request, null);
+
+        self::assertInstanceOf(RedirectResponse::class, $actual);
+        self::assertEquals($expected, $actual->getTargetUrl());
     }
 
     /**
