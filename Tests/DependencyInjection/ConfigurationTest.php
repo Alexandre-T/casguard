@@ -52,7 +52,7 @@ class ConfigurationTest extends TestCase
      */
     public function testDump()
     {
-        $expected =  str_replace("\r\n", "\n", file_get_contents(__DIR__ . '/../../Resources/doc/configuration_sample.yaml'));
+        $expected = str_replace("\r\n", "\n", file_get_contents(__DIR__.'/../../Resources/doc/configuration_sample.yaml'));
         $dumper = new YamlReferenceDumper();
 
         $actual = $dumper->dump($this->configuration);
