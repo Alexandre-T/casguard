@@ -102,7 +102,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
             $this->cas->getVersion(),
             $this->cas->getHostname(),
             $this->cas->getPort(),
-            $this->cas->getUri()
+            $this->cas->getUrl()
         );
         phpCAS::setLang($this->cas->getLanguage());
 
@@ -269,7 +269,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
             $this->cas->getVersion(),
             $this->cas->getHostname(),
             $this->cas->getPort(),
-            $this->cas->getUri()
+            $this->cas->getUrl()
         );
         phpCAS::setLang($this->cas->getLanguage());
         phpCAS::logout();
