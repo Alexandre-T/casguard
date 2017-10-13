@@ -140,8 +140,6 @@ class ConfigurationTest extends TestCase
             'url' => 'cas/login',
             'verbose' => false,
             'version' => '3.0',
-            'repository' => 'App:User',
-            'property' => 'username',
             'route' => [
                 'homepage' => 'homepage',
                 'login' => 'security_login',

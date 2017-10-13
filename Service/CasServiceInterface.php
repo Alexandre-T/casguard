@@ -64,22 +64,6 @@ interface CasServiceInterface
     public function getLanguage();
 
     /**
-     * Return the name of the property to retrieve User in its repository.
-     *
-     * Default value is username, mail could be a good value too.
-     *
-     * @return mixed
-     */
-    public function getProperty();
-
-    /**
-     * Repository name of entity manager to retrieve user.
-     *
-     * @return string
-     */
-    public function getRepository();
-
-    /**
      * Your homepage route.
      *
      * @return string

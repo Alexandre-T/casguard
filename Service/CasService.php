@@ -91,26 +91,6 @@ class CasService implements CasServiceInterface
     }
 
     /**
-     * Return the property.
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->getParameter('property');
-    }
-
-    /**
-     * Return the Repository.
-     *
-     * @return string
-     */
-    public function getRepository()
-    {
-        return $this->getParameter('repository');
-    }
-
-    /**
      * Return the home page route.
      *
      * @return string

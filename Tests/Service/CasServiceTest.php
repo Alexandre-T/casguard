@@ -51,8 +51,6 @@ class CasServiceTest extends TestCase
         self::assertInternalType('string', $this->service->getDebug());
         self::assertEquals('example.org', $this->service->getHostname());
         self::assertEquals(PHPCAS_LANG_ENGLISH, $this->service->getLanguage());
-        self::assertEquals('username', $this->service->getProperty());
-        self::assertEquals('App:User', $this->service->getRepository());
         self::assertEquals('security_login', $this->service->getRouteLogin());
         self::assertEquals('homepage', $this->service->getRouteHomepage());
         self::assertEquals(443, $this->service->getPort());

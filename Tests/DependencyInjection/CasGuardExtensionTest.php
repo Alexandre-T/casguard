@@ -73,8 +73,6 @@ class CasGuardExtensionTest extends TestCase
                     'port' => 80,
                     'url' => 'cas/login/',
                     'version' => Configuration::CAS_VERSION_2_0,
-                    'repository' => 'AppBundle:User',
-                    'property' => 'mail',
                     'route' => [
                         'homepage' => 'home',
                         'login' => 'login',
@@ -97,8 +95,6 @@ class CasGuardExtensionTest extends TestCase
             'url' => 'cas/login/',
             'verbose' => false,
             'version' => Configuration::CAS_VERSION_2_0,
-            'repository' => 'AppBundle:User',
-            'property' => 'mail',
             'route' => [
                 'homepage' => 'home',
                 'login' => 'login',

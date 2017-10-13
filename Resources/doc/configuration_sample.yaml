@@ -15,14 +15,10 @@ cas_guard:
     # Server cas port
     port:                 443 # Example: 443
 
-    # REQUEST_PATH of the CAS server
+    # REQUEST_PATH of the CAS server.
     url:                  cas/login # Example: cas/login
 
-    # Repository to retrieve user.
-    repository:           'App:User' # Example: AppBundle:User
-
-    # property of the repository to compare with provided credentials (username or email)
-    property:             username # Example: mail
+    # Route node.
     route:
 
         # Name of your home route.
@@ -36,6 +32,8 @@ cas_guard:
 
     # Version of the CAS Server.
     version:              '3.0' # One of "3.0"; "2.0"; "1.0", Example: 3.0
+
+    # Logout node.
     logout:
 
         # Are the CAS server and your application supporting single sign out signal?
@@ -45,4 +43,4 @@ cas_guard:
         handled:              true # Example: false
 
         # An array of host names allowed to send logout requests.
-        allowed_clients:      ~ # Example: ["server1.example.org", "server2.example.org"]
+        allowed_clients:      '[]' # Example: ["server1.example.org", "server2.example.org"]

@@ -21,7 +21,6 @@ use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +52,7 @@ class CasAuthenticatorTest extends TestCase
     private $configuration = [];
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var EntityManager|PHPUnit_Framework_MockObject_MockObject
      */
     private $entityManager;
 
@@ -63,12 +62,12 @@ class CasAuthenticatorTest extends TestCase
     private $guardAuthenticator;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var TokenStorageInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $tokenStorage;
 
     /**
-     * @var PHPUnit_Framework_MockObject_MockObject
+     * @var RouterInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
 
@@ -121,6 +120,78 @@ class CasAuthenticatorTest extends TestCase
         $this->configuration['logout']['supported'] = true; //we use single sign out signal
         $this->configuration['logout']['handled'] = true; //we use single sign out signal
         $this->configuration['logout']['allowed_clients'] = ['foo', 'bar']; //we use single sign out signal
+
+        $this->reloadConfiguration();
+
+        $phpCas = $this->mockPhpCAS([
+            'getUser' => $actual, //we return a user
+        ]);
+
+        //The first request call credentials and return a user (here this is a string)
+        self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
+
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('setCasServerCACert');
+        $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedOnce('handleLogoutRequests');
+        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
+        $phpCas->verifyInvokedMultipleTimes('getUser', 2);
+    }
+
+    /**
+     * Test the first example in phpcas documentation with a connected user (foo).
+     *
+     * phpCAS can be used the simplest way, as a CAS client.
+     *
+     * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     */
+    public function testExampleSimpleWithoutAllowedClients()
+    {
+        $expected = $actual = 'foo';
+
+        $this->configuration['certificate'] = 'certificate.txt'; //we use a certificate
+        $this->configuration['logout']['supported'] = true; //we use single sign out signal
+        $this->configuration['logout']['handled'] = true; //we use single sign out signal
+        $this->configuration['logout']['allowed_clients'] = null; //we use single sign out signal
+
+        $this->reloadConfiguration();
+
+        $phpCas = $this->mockPhpCAS([
+            'getUser' => $actual, //we return a user
+        ]);
+
+        //The first request call credentials and return a user (here this is a string)
+        self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
+
+        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('client');
+        $phpCas->verifyInvokedOnce('setLang');
+        $phpCas->verifyInvokedOnce('setVerbose');
+        $phpCas->verifyInvokedOnce('setCasServerCACert');
+        $phpCas->verifyInvokedOnce('forceAuthentication');
+        $phpCas->verifyInvokedOnce('handleLogoutRequests');
+        $phpCas->verifyNeverInvoked('setNoCasServerValidation');
+        $phpCas->verifyInvokedMultipleTimes('getUser', 2);
+    }
+
+    /**
+     * Test the first example in phpcas documentation with a connected user (foo).
+     *
+     * phpCAS can be used the simplest way, as a CAS client.
+     *
+     * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     */
+    public function testExampleSimpleWithEmptyAllowedClients()
+    {
+        $expected = $actual = 'foo';
+
+        $this->configuration['certificate'] = 'certificate.txt'; //we use a certificate
+        $this->configuration['logout']['supported'] = true; //we use single sign out signal
+        $this->configuration['logout']['handled'] = true; //we use single sign out signal
+        $this->configuration['logout']['allowed_clients'] = []; //we use single sign out signal
 
         $this->reloadConfiguration();
 
@@ -209,24 +280,15 @@ class CasAuthenticatorTest extends TestCase
     {
         $expected = $actual = 'toto';
 
-        $entityRepository = $this->getMockBuilder(EntityRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->entityManager
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->casService->getRepository())
-            ->willReturn($entityRepository);
-
-        $entityRepository
-            ->expects($this->once())
-            ->method('findOneBy')
-            ->with([$this->casService->getProperty() => 'foo'])
-            ->willReturn($actual);
-
+        /** @var UserProviderInterface|PHPUnit_Framework_MockObject_MockObject $user */
         $user = $this->getMockBuilder(UserProviderInterface::class)
             ->getMock();
+
+        $user
+            ->expects(self::once())
+            ->method('loadUserByUsername')
+            ->with('foo')
+            ->willReturn('toto');
 
         self::assertEquals($expected, $this->guardAuthenticator->getUser('foo', $user));
     }
@@ -369,8 +431,6 @@ class CasAuthenticatorTest extends TestCase
             'hostname' => 'cas.example.org',
             'language' => Configuration::PHPCAS_LANG_FRENCH,
             'port' => 443,
-            'property' => 'mail',
-            'repository' => 'App:User',
             'route' => [
                 'homepage' => 'home',
                 'login' => 'login',
