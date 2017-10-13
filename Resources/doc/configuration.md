@@ -12,8 +12,6 @@ cas_guard:
     language:             CAS_Languages_English # One of "CAS_Languages_English"; "CAS_Languages_French"; "CAS_Languages_Greek"; "CAS_Languages_German"; "CAS_Languages_Japanese"; "CAS_Languages_Spanish"; "CAS_Languages_Catalan"; "CAS_Languages_ChineseSimplified", Example: CAS_Languages_French
     # Server cas port
     port:                 443 # Example: 443
-    # Complete URL of the cas server login page
-    uri_login:            ~ # Required, Example: https://www.example.org:443/cas/login
     # REQUEST_PATH of the CAS server
     url:                  cas/login # Example: cas/login
     # Repository to retrieve user.

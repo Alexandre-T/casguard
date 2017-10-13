@@ -137,8 +137,7 @@ class CasService implements CasServiceInterface
      */
     public function getUri()
     {
-        //FIXME Fix IT, it must be used as inside phpCas. This is not a parameter but a calculated field.
-        return $this->getParameter('uri_login');
+        return "https://{$this->getHostname()}:{$this->getPort()}/{$this->getUrl()}";
     }
 
     /**

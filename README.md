@@ -105,8 +105,6 @@ For **Symfony 3.4+**, create a `config\packages\cas_guard.yaml` file:
 ```yaml
 cas_guard:
     hostname: '%env(CAS_HOSTNAME)%'
-    uri_login: '%env(CAS_URL)%'
-    version: "3.0"
     # ...
 
 ```

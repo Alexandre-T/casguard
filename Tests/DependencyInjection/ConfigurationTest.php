@@ -87,35 +87,6 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * Test that an undefined login path is throwing an exception.
-     */
-    public function testUndefinedLoginConfigTreeBuilder()
-    {
-        self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The child node "uri_login" at path "cas_guard" must be configured.');
-        $node = $this->configuration->getConfigTreeBuilder()->buildTree();
-        $normalizedConfig = $node->normalize([
-            'hostname' => 'foo.example.org',
-        ]);
-        $node->finalize($normalizedConfig);
-    }
-
-    /**
-     * Test that an empty login path is throwing an exception.
-     */
-    public function testEmptyLoginConfigTreeBuilder()
-    {
-        self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The path "cas_guard.uri_login" cannot contain an empty value, but got "".');
-        $node = $this->configuration->getConfigTreeBuilder()->buildTree();
-        $normalizedConfig = $node->normalize([
-            'hostname' => 'foo.example.org',
-            'uri_login' => '', //empty
-        ]);
-        $node->finalize($normalizedConfig);
-    }
-
-    /**
      * Test CasGuardExtension->getContainer with invalid configuration.
      */
     public function testGetConfigWithWrongKey()
@@ -126,7 +97,6 @@ class ConfigurationTest extends TestCase
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
             'hostname' => 'foo.example.org',
-            'uri_login' => 'login',
             'foo' => 'bar',
         ]);
         $node->finalize($normalizedConfig);
@@ -143,7 +113,6 @@ class ConfigurationTest extends TestCase
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([
             'hostname' => 'foo.example.org',
-            'uri_login' => 'login',
             'version' => 'foo',
         ]);
         $node->finalize($normalizedConfig);
@@ -156,7 +125,6 @@ class ConfigurationTest extends TestCase
     {
         $actual = [
             'hostname' => 'example.org',
-            'uri_login' => 'foo',
             'logout' => [
                 'allowed_clients' => [
                     0 => 'example1.org',
@@ -169,7 +137,6 @@ class ConfigurationTest extends TestCase
             'debug' => '',
             'hostname' => 'example.org',
             'port' => 443,
-            'uri_login' => 'foo',
             'url' => 'cas/login',
             'verbose' => false,
             'version' => '3.0',

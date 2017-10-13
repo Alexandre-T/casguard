@@ -15,9 +15,6 @@ cas_guard:
     # Server cas port
     port:                 443 # Example: 443
 
-    # Complete URL of the cas server login page
-    uri_login:            ~ # Required, Example: https://www.example.org:443/cas/login
-
     # REQUEST_PATH of the CAS server
     url:                  cas/login # Example: cas/login
 

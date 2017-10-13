@@ -377,7 +377,7 @@ class CasAuthenticatorTest extends TestCase
             ],
             'verbose' => true,
             'version' => Configuration::CAS_VERSION_3_0,
-            'uri_login' => '/cas',
+            'url' => 'cas/url',
             'logout' => [
                 'supported' => false,
                 'handled' => false,

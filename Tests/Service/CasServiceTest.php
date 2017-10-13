@@ -56,7 +56,7 @@ class CasServiceTest extends TestCase
         self::assertEquals('security_login', $this->service->getRouteLogin());
         self::assertEquals('homepage', $this->service->getRouteHomepage());
         self::assertEquals(443, $this->service->getPort());
-        self::assertEquals('foo', $this->service->getUri());
+        self::assertEquals('https://example.org:443/cas/login', $this->service->getUri());
         self::assertEquals('cas/login', $this->service->getUrl());
         self::assertFalse($this->service->getVerbose());
         self::assertFalse($this->service->hasCertificate());
@@ -211,7 +211,6 @@ class CasServiceTest extends TestCase
         $config = new Configuration();
         $actual = array_merge($actual, [
             'hostname' => 'example.org',
-            'uri_login' => 'foo',
         ]);
 
         $node = $config->getConfigTreeBuilder()->buildTree();
