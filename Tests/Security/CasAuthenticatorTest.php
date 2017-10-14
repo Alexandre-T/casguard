@@ -267,7 +267,7 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testGetUser()
     {
-        $expected = $actual = 'toto';
+        $expected = 'toto';
 
         /** @var UserProviderInterface|PHPUnit_Framework_MockObject_MockObject $user */
         $user = $this->getMockBuilder(UserProviderInterface::class)
