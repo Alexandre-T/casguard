@@ -165,7 +165,7 @@ class CasService implements CasServiceInterface
      */
     public function hasCertificate()
     {
-        return !(false === $this->getParameter('certificate') or is_null($this->getParameter('certificate')));
+        return !(false === $this->getParameter('certificate') || is_null($this->getParameter('certificate')));
     }
 
     /**
