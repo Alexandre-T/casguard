@@ -20,12 +20,10 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
-use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -53,19 +51,9 @@ class CasAuthenticatorTest extends TestCase
     private $configuration = [];
 
     /**
-     * @var EntityManager|PHPUnit_Framework_MockObject_MockObject
-     */
-    private $entityManager;
-
-    /**
      * @var CasAuthenticator
      */
     private $guardAuthenticator;
-
-    /**
-     * @var TokenStorageInterface|PHPUnit_Framework_MockObject_MockObject
-     */
-    private $tokenStorage;
 
     /**
      * @var RouterInterface|PHPUnit_Framework_MockObject_MockObject
@@ -465,20 +453,12 @@ class CasAuthenticatorTest extends TestCase
             ],
         ];
 
-        $this->entityManager = $this->getMockBuilder(EntityManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $this->router = $this->getMockBuilder(RouterInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->casService = new CasService($this->configuration);
 
         $this->guardAuthenticator = new CasAuthenticator(
-            $this->entityManager,
-            $this->tokenStorage,
             $this->router,
             $this->casService
         );
@@ -492,8 +472,6 @@ class CasAuthenticatorTest extends TestCase
     {
         parent::tearDown();
         test::clean();
-        $this->entityManager = null;
-        $this->tokenStorage = null;
         $this->router = null;
         $this->casService = null;
         $this->guardAuthenticator = null;
@@ -537,8 +515,6 @@ class CasAuthenticatorTest extends TestCase
         $this->casService = new CasService($this->configuration);
 
         $this->guardAuthenticator = new CasAuthenticator(
-            $this->entityManager,
-            $this->tokenStorage,
             $this->router,
             $this->casService
         );

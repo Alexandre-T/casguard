@@ -6,7 +6,5 @@ services:
     phpcasguard.cas_authenticator:
         class: AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator
         arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@security.token_storage'
             - '@router'
             - '@phpcasguard.cas_service'

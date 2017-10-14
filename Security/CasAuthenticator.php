@@ -17,14 +17,12 @@
 namespace AlexandreT\Bundle\CasGuardBundle\Security;
 
 use AlexandreT\Bundle\CasGuardBundle\Service\CasServiceInterface;
-use Doctrine\ORM\EntityManager;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -43,20 +41,6 @@ use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSuccessHandlerInterface
 {
     /**
-     * Entity Manager Interface.
-     *
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * Token storage interface.
-     *
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
-
-    /**
      * Router Interface.
      *
      * @var RouterInterface
@@ -73,15 +57,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     /**
      * Cas Authenticator constructor.
      *
-     * @param EntityManager         $em
-     * @param TokenStorageInterface $tokenStorage
      * @param RouterInterface       $router
      * @param CasServiceInterface   $cas
      */
-    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage, RouterInterface $router, CasServiceInterface $cas)
+    public function __construct(RouterInterface $router, CasServiceInterface $cas)
     {
-        $this->em = $em;
-        $this->tokenStorage = $tokenStorage;
         $this->router = $router;
         $this->cas = $cas;
     }
