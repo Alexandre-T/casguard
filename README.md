@@ -110,4 +110,4 @@ cas_guard:
 ```
 
 Have a look on the [complete configuration](./Resources/doc/configuration.md) file to 
-customize configuration to use your CAS server. 
+adapt it to your CAS server. 
