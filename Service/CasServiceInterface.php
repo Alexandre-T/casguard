@@ -99,13 +99,6 @@ interface CasServiceInterface
     public function getUrl();
 
     /**
-     * Return the verbose mode.
-     *
-     * @return bool
-     */
-    public function getVerbose();
-
-    /**
      * Return the Cas protocol version used.
      *
      * @return string
@@ -120,6 +113,13 @@ interface CasServiceInterface
     public function hasCertificate();
 
     /**
+     * The server is supporting single sign ou signal, but is this application using it?
+     *
+     * @return bool
+     */
+    public function isHandleLogoutRequest();
+
+    /**
      * Is the Cas Server Supporting the Single Sign Out Signal?
      *
      * @see https://wiki.jasig.org/display/CASUM/Single+Sign+Out
@@ -129,9 +129,9 @@ interface CasServiceInterface
     public function isSupportingSingleSignOutSignal();
 
     /**
-     * The server is supporting single sign ou signal, but is this application using it?
+     * Return the verbose mode.
      *
      * @return bool
      */
-    public function isHandleLogoutRequest();
+    public function isVerbose();
 }

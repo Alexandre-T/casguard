@@ -56,7 +56,7 @@ class CasServiceTest extends TestCase
         self::assertEquals(443, $this->service->getPort());
         self::assertEquals('https://example.org:443/cas/login', $this->service->getUri());
         self::assertEquals('cas/login', $this->service->getUrl());
-        self::assertFalse($this->service->getVerbose());
+        self::assertFalse($this->service->isVerbose());
         self::assertFalse($this->service->hasCertificate());
         self::assertEquals('3.0', $this->service->getVersion());
     }

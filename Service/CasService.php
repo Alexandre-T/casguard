@@ -141,16 +141,6 @@ class CasService implements CasServiceInterface
     }
 
     /**
-     * Return the verbose mode.
-     *
-     * @return bool
-     */
-    public function getVerbose()
-    {
-        return $this->getParameter('verbose');
-    }
-
-    /**
      * Return the version.
      *
      * @return string
@@ -169,6 +159,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * The server is supporting single sign ou signal, but is this application using it?
+     *
+     * @return bool
+     */
+    public function isHandleLogoutRequest()
+    {
+        return $this->getLogoutParameter('handled');
+    }
+
+    /**
      * Is the Cas Server Supporting the Single Sign Out Signal?
      *
      * @see https://wiki.jasig.org/display/CASUM/Single+Sign+Out
@@ -181,13 +181,13 @@ class CasService implements CasServiceInterface
     }
 
     /**
-     * The server is supporting single sign ou signal, but is this application using it?
+     * Return the verbose mode.
      *
      * @return bool
      */
-    public function isHandleLogoutRequest()
+    public function isVerbose()
     {
-        return $this->getLogoutParameter('handled');
+        return $this->getParameter('verbose');
     }
 
     /**

@@ -77,7 +77,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     public function getCredentials(Request $request)
     {
         phpCAS::setDebug($this->cas->getDebug());
-        phpCAS::setVerbose($this->cas->getVerbose());
+        phpCAS::setVerbose($this->cas->isVerbose());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),
@@ -239,7 +239,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     public function onLogoutSuccess(Request $request)
     {
         phpCAS::setDebug($this->cas->getDebug());
-        phpCAS::setVerbose($this->cas->getVerbose());
+        phpCAS::setVerbose($this->cas->isVerbose());
         phpCAS::client(
             $this->cas->getVersion(),
             $this->cas->getHostname(),
