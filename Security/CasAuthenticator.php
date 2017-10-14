@@ -57,8 +57,8 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
     /**
      * Cas Authenticator constructor.
      *
-     * @param RouterInterface       $router
-     * @param CasServiceInterface   $cas
+     * @param RouterInterface     $router
+     * @param CasServiceInterface $cas
      */
     public function __construct(RouterInterface $router, CasServiceInterface $cas)
     {
