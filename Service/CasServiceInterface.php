@@ -41,11 +41,11 @@ interface CasServiceInterface
     public function getCertificate();
 
     /**
-     * Return true if debugging mode is enabled.
+     * Return the filename used for phpCas logs or false when debug is disabled.
      *
-     * Default value must be false.
+     * If empty, phpcas will use the default log file ("os_tmp_dir"/phpcas.log)
      *
-     * @return bool
+     * @return bool|string
      */
     public function getDebug();
 

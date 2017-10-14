@@ -61,9 +61,11 @@ class CasService implements CasServiceInterface
     }
 
     /**
-     * Return true if the internal PhpCAS debug activation tool is on.
+     * Return the filename used for phpCas logs or false when debug is disabled.
      *
-     * @return string
+     * If empty, phpcas will use the default log file ("os_tmp_dir"/phpcas.log)
+     *
+     * @return bool|string
      */
     public function getDebug()
     {
