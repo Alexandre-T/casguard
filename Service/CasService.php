@@ -28,6 +28,13 @@ use AlexandreT\Bundle\CasGuardBundle\Exception\CasException;
  */
 class CasService implements CasServiceInterface
 {
+    /**
+     * Configuration array.
+     *
+     * In this bundled, it is populated by configuration class and cas_guard.yaml file.
+     *
+     * @var array
+     */
     private $configuration;
 
     /**

@@ -1,17 +1,26 @@
 <?php
 /**
- * This file is part of the casguard.
+ * This file is part of the CasGuardBundle.
  *
  * PHP version 5.6 | 7.0 | 7.1
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category Test
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
  *
  * @see https://github.com/Alexandre-T/casguard/blob/master/LICENSE
+ */
+
+/**
+ * This file autoload the class and bootstrap the tests by creating a kernel for aspect mock.
+ *
+ * @category Test
+ *
+ * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
+ * @license   MIT
  */
 include __DIR__.'/../vendor/autoload.php'; // composer autoload
 

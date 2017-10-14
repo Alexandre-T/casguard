@@ -26,17 +26,59 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * CAS Language English used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_ENGLISH = 'CAS_Languages_English';
+
+    /**
+     * CAS Language French used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_FRENCH = 'CAS_Languages_French';
+
+    /**
+     * CAS Language Greek used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_GREEK = 'CAS_Languages_Greek';
+
+    /**
+     * CAS Language German used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_GERMAN = 'CAS_Languages_German';
+
+    /**
+     * CAS Language Japanese used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_JAPANESE = 'CAS_Languages_Japanese';
+
+    /**
+     * CAS Language Spanish used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_SPANISH = 'CAS_Languages_Spanish';
+
+    /**
+     * CAS Language Catalan used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_CATALAN = 'CAS_Languages_Catalan';
+
+    /**
+     * CAS simplified chinese language used by jasig/phpcas library.
+     */
     const PHPCAS_LANG_CHINESE_SIMPLIFIED = 'CAS_Languages_ChineseSimplified';
 
+    /**
+     * CAS server version 3.0
+     */
     const CAS_VERSION_3_0 = '3.0';
+
+    /**
+     * CAS server version 2.0
+     */
     const CAS_VERSION_2_0 = '2.0';
+
+    /**
+     * CAS server version 1.0
+     */
     const CAS_VERSION_1_0 = '1.0';
 
     /**

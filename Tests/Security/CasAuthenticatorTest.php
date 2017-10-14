@@ -51,16 +51,22 @@ class CasAuthenticatorTest extends TestCase
     private $configuration = [];
 
     /**
+     * The guard authenticator to test.
+     *
      * @var CasAuthenticator
      */
     private $guardAuthenticator;
 
     /**
+     * The router is mocked.
+     *
      * @var RouterInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $router;
 
     /**
+     * The cas service used by the authenticator.
+     *
      * @var CasService
      */
     private $casService;

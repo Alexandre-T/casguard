@@ -6,7 +6,7 @@
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category Tests
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
@@ -21,6 +21,14 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * CasGuardExtensionTest class.
+ *
+ * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ *
+ * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
+ * @license MIT
+ */
 class CasGuardExtensionTest extends TestCase
 {
     /**

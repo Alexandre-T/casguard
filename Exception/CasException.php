@@ -6,7 +6,7 @@
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category Exception
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
@@ -18,6 +18,14 @@ namespace AlexandreT\Bundle\CasGuardBundle\Exception;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 
+/**
+ * CasException class.
+ *
+ * @category Exception
+ *
+ * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
+ * @license MIT
+ */
 class CasException extends Exception
 {
 }
