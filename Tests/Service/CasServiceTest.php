@@ -69,8 +69,16 @@ class CasServiceTest extends TestCase
         $this->service = new CasService($this->loadConfiguration());
         self::assertFalse($this->service->hasCertificate());
 
-        $this->service = new CasService($this->loadConfiguration(['certificate' => 'certificate.txt']));
+        $this->service = new CasService($this->loadConfiguration(['certificate' => false]));
+        self::assertFalse($this->service->hasCertificate());
 
+        $this->service = new CasService($this->loadConfiguration(['certificate' => null]));
+        self::assertFalse($this->service->hasCertificate());
+
+        $this->service = new CasService($this->loadConfiguration(['certificate' => true]));
+        self::assertTrue($this->service->hasCertificate());
+
+        $this->service = new CasService($this->loadConfiguration(['certificate' => 'certificate.txt']));
         self::assertTrue($this->service->hasCertificate());
     }
 
