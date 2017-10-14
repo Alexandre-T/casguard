@@ -15,21 +15,17 @@
 
 namespace AlexandreT\Bundle\CasGuardBundle;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Cas Guard Bundle.
+ *
+ * This bundle provides a guard authentication service using phpCas
+ * instead of the traditional login form authenticator services.
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
  */
 class CasGuardBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
-        //$extension = $container->getExtension('security');
-        //$extension->addSecurityListenerFactory(new CasFactory());
-    }
 }
