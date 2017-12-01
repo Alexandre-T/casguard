@@ -255,4 +255,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
 
         return new RedirectResponse($uri);
     }
+
+    public function supports(Request $request)
+    {
+
+    }
 }
