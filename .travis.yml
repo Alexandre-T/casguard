@@ -78,7 +78,7 @@ before_install:
 install:
   - composer install
 #  - composer require --dev phpunit/phpunit:~5.0
-  - composer require --dev satooshi/php-coveralls:~0.6
+  - composer require --dev satooshi/php-coveralls:~2.0
 
 # Run script and log coverage in the "build" directory
 script:
