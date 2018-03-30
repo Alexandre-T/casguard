@@ -94,7 +94,7 @@ class CasServiceTest extends TestCase
         //Test true value.
         $this->service = new CasService($this->loadConfiguration([
             'logout' => [
-                'redirect_url' => true
+                'redirect_url' => true,
             ],
         ]));
         self::assertTrue($this->service->isRedirectingAfterLogout());
@@ -102,7 +102,7 @@ class CasServiceTest extends TestCase
         //Test false value.
         $this->service = new CasService($this->loadConfiguration([
             'logout' => [
-                'redirect_url' => false
+                'redirect_url' => false,
             ],
         ]));
         self::assertFalse($this->service->isRedirectingAfterLogout());

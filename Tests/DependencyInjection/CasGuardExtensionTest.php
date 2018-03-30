@@ -71,6 +71,8 @@ class CasGuardExtensionTest extends TestCase
 
     /**
      * We test a valid configuration.
+     *
+     * @throws \Exception
      */
     public function testValidConfiguration()
     {

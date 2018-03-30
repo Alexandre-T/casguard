@@ -67,17 +67,17 @@ class Configuration implements ConfigurationInterface
     const PHPCAS_LANG_CHINESE_SIMPLIFIED = 'CAS_Languages_ChineseSimplified';
 
     /**
-     * CAS server version 3.0
+     * CAS server version 3.0.
      */
     const CAS_VERSION_3_0 = '3.0';
 
     /**
-     * CAS server version 2.0
+     * CAS server version 2.0.
      */
     const CAS_VERSION_2_0 = '2.0';
 
     /**
-     * CAS server version 1.0
+     * CAS server version 1.0.
      */
     const CAS_VERSION_1_0 = '1.0';
 

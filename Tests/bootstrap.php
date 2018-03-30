@@ -27,7 +27,7 @@ include __DIR__.'/../vendor/autoload.php'; // composer autoload
 $kernel = \AspectMock\Kernel::getInstance();
 $kernel->init([
     'debug' => true,
-    'appDir' => __DIR__ . '/..',
+    'appDir' => __DIR__.'/..',
     'cacheDir' => 'build/cache',
     'includePaths' => [
         __DIR__.'/../vendor/jasig/phpcas',

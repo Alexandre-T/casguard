@@ -88,6 +88,7 @@ class CasAuthenticatorTest extends TestCase
      * This is a test to validate AspectMock configuration.
      *
      * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
+     *
      * @throws \Exception
      * @throws \PHPUnit_Framework_ExpectationFailedException
      */

@@ -234,8 +234,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      * Logout and redirect to home page.
      *
      * @param Request $request
-     *
-     * @return void
      */
     public function onLogoutSuccess(Request $request)
     {
