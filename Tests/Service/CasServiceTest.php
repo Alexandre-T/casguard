@@ -83,7 +83,35 @@ class CasServiceTest extends TestCase
     }
 
     /**
+     * Test isRedirectingAfterLogout() method.
+     */
+    public function testIsRedirectingAfterLogout()
+    {
+        //Test default value.
+        $this->service = new CasService($this->loadConfiguration());
+        self::assertFalse($this->service->isRedirectingAfterLogout());
+
+        //Test true value.
+        $this->service = new CasService($this->loadConfiguration([
+            'logout' => [
+                'redirect_url' => true
+            ],
+        ]));
+        self::assertTrue($this->service->isRedirectingAfterLogout());
+
+        //Test false value.
+        $this->service = new CasService($this->loadConfiguration([
+            'logout' => [
+                'redirect_url' => false
+            ],
+        ]));
+        self::assertFalse($this->service->isRedirectingAfterLogout());
+    }
+
+    /**
      * test private getParameter() method with reflection class.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetParameter()
     {
@@ -98,6 +126,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetNonExistentParameter()
     {
@@ -113,6 +143,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getRouteParameter() method with reflection class.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetRouteParameter()
     {
@@ -131,6 +163,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetNonExistentRouteParameter()
     {
@@ -150,6 +184,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetNonExistentRouteSubParameter()
     {
@@ -169,6 +205,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetNonExistentLogoutParameter()
     {
@@ -188,6 +226,8 @@ class CasServiceTest extends TestCase
 
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
+     *
+     * @throws \ReflectionException
      */
     public function testPrivateGetNonExistentLogoutSubParameter()
     {

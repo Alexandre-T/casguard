@@ -120,6 +120,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * Return the route after successful logout.
+     *
+     * @return string
+     */
+    public function getRouteLogout()
+    {
+        return $this->getRouteParameter('logout');
+    }
+
+    /**
      * Return the URI.
      *
      * @return string
@@ -175,6 +185,18 @@ class CasService implements CasServiceInterface
     public function isHandleLogoutRequest()
     {
         return $this->getLogoutParameter('handled');
+    }
+
+    /**
+     * Is user redirect after logout.
+     *
+     * It could be a link on the logout page on your CAS Server.
+     *
+     * @return bool
+     */
+    public function isRedirectingAfterLogout()
+    {
+        return $this->getLogoutParameter('redirect_url');
     }
 
     /**

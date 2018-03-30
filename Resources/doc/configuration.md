@@ -28,6 +28,9 @@ cas_guard:
 
         # Name of your login route.
         login:                security_login # Example: my_login_route
+        
+        # Name of the route after a successful logout.
+        logout:               homepage # Example: home
 
     # If true phpcas trace will be more explicit.
     verbose:              false # Example: true
@@ -46,4 +49,8 @@ cas_guard:
 
         # An array of host names allowed to send logout requests.
         allowed_clients:      '[]' # Example: ["server1.example.org", "server2.example.org"]
+        
+        # true if you want to provide the url to the user to go back to your application after logout.
+        redirect_url:         false # Example: true
+        
 ```

@@ -143,6 +143,7 @@ class ConfigurationTest extends TestCase
             'route' => [
                 'homepage' => 'homepage',
                 'login' => 'security_login',
+                'logout' => 'home',
             ],
             'language' => Configuration::PHPCAS_LANG_ENGLISH,
             'logout' => [
@@ -152,6 +153,7 @@ class ConfigurationTest extends TestCase
                     'example1.org',
                     'example2.org',
                 ],
+                'redirect_url' => false,
             ],
         ];
 

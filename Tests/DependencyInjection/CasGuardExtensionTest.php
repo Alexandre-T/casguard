@@ -106,6 +106,7 @@ class CasGuardExtensionTest extends TestCase
             'route' => [
                 'homepage' => 'home',
                 'login' => 'login',
+                'logout' => 'home',
             ],
             'language' => Configuration::PHPCAS_LANG_ENGLISH,
             'logout' => [
@@ -115,6 +116,7 @@ class CasGuardExtensionTest extends TestCase
                     0 => 'foo',
                     1 => 'bar',
                 ],
+                'redirect_url' => false,
             ],
         ];
 

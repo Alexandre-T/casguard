@@ -78,6 +78,15 @@ interface CasServiceInterface
     public function getRouteLogin();
 
     /**
+     * The route where user is redirected after logout.
+     *
+     * It could be the home route of your application.
+     *
+     * @return string
+     */
+    public function getRouteLogout();
+
+    /**
      * Return the port used by your CAS service on your server.
      *
      * @return int
@@ -127,6 +136,15 @@ interface CasServiceInterface
      * @return bool
      */
     public function isSupportingSingleSignOutSignal();
+
+    /**
+     * Is user redirect after logout.
+     *
+     * It could be a link on the logout page on your CAS Server.
+     *
+     * @return bool
+     */
+    public function isRedirectingAfterLogout();
 
     /**
      * Return the verbose mode.

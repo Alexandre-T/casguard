@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -94,7 +95,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
 
         /* @see https://wiki.jasig.org/display/CASC/phpCAS+examples#phpCASexamples-HandlelogoutrequestsfromtheCASserver */
         if ($this->cas->isSupportingSingleSignOutSignal()) {
-            if (count($this->cas->getAllowedClients())) {
+            if (!is_null($this->cas->getAllowedClients()) && count($this->cas->getAllowedClients())) {
                 phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $this->cas->getAllowedClients());
             } else {
                 phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest());
@@ -234,7 +235,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      *
      * @param Request $request
      *
-     * @return RedirectResponse
+     * @return void
      */
     public function onLogoutSuccess(Request $request)
     {
@@ -247,17 +248,22 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
             $this->cas->getUrl()
         );
         phpCAS::setLang($this->cas->getLanguage());
-        phpCAS::logout();
 
-        $uri = $this->router->generate(
-            $this->cas->getRouteHomepage()
-        );
-
-        return new RedirectResponse($uri);
+        if ($this->cas->isRedirectingAfterLogout()) {
+            $uri = $this->router->generate(
+                $this->cas->getRouteLogout(),
+                [],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
+            phpCAS::logoutWithRedirectService($uri);
+        } else {
+            //simple logout
+            phpCAS::logout();
+        }
     }
 
     /**
-     * All pages are managed by this Authtenticator.
+     * All pages are managed by this Authenticator.
      *
      * @param Request $request
      *
