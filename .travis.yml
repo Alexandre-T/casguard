@@ -10,8 +10,6 @@ cache:
 
 # Base versions to test raw with the Symfony latest version.
 php:
-  - 5.6
-  - 7.0
   - 7.1
   - 7.2
   - hhvm
@@ -28,42 +26,29 @@ matrix:
   fast_finish: true
   include:
     # Lowest dependency
-    - php: 5.6
-      env: SYMFONY_VERSION="2.8.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.0.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.1.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.2.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.3.x"
-    - php: 5.6
-      env: SYMFONY_VERSION="3.4.x"
-    - php: 7.0
-      env: SYMFONY_VERSION="2.8.x"
-    - php: 7.0
-      env: SYMFONY_VERSION="3.1.x"
-    - php: 7.0
-      env: SYMFONY_VERSION="3.2.x"
-    - php: 7.0
-      env: SYMFONY_VERSION="3.3.x"
-    - php: 7.0
-      env: SYMFONY_VERSION="3.4.x"
-    - php: 7.1
-      env: SYMFONY_VERSION="2.8.x"
-    - php: 7.1
-      env: SYMFONY_VERSION="3.1.x"
-    - php: 7.1
-      env: SYMFONY_VERSION="3.2.x"
-    - php: 7.1
-      env: SYMFONY_VERSION="3.3.x"
     - php: 7.1
       env: SYMFONY_VERSION="3.4.x"
-  allow_failures:
     - php: 7.2
+      env: SYMFONY_VERSION="3.4.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="4.0.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="4.0.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="4.1.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="4.1.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="4.2.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="4.2.x"
+    - php: 7.1
+      env: SYMFONY_VERSION="4.3.x"
+    - php: 7.2
+      env: SYMFONY_VERSION="4.3.x"
+  allow_failures:
     - php: hhvm
-    - env: SYMFONY_VERSION="dev-master"
+    - env: SYMFONY_VERSION="4.3.x"
 
 # Update composer, and update Symfony version depending on the matrix
 before_install:

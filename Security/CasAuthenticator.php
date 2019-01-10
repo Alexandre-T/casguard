@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -118,7 +118,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      * @param string                $credentials
      * @param UserProviderInterface $userProvider
      *
-     * @return null|object
+     * @return null|UserInterface
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {

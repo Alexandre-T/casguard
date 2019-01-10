@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * CasGuardExtensionTest class.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ * @category Tests\DependencyInjection
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT

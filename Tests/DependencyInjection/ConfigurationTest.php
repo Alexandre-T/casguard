@@ -25,7 +25,7 @@ use Symfony\Component\Config\Definition\Dumper\YamlReferenceDumper;
 /**
  * Configuration class test.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ * @category Tests\DependencyInjection
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT

@@ -2,11 +2,11 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category DependencyInjection
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
@@ -88,7 +88,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('cas_guard');
         $rootNode = $treeBuilder->root('cas_guard');
         $rootNode
             ->children()
