@@ -20,11 +20,11 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -60,7 +60,7 @@ class CasAuthenticatorTest extends TestCase
     /**
      * The router is mocked.
      *
-     * @var RouterInterface|PHPUnit_Framework_MockObject_MockObject
+     * @var RouterInterface|MockObject
      */
     private $router;
 
@@ -293,7 +293,7 @@ class CasAuthenticatorTest extends TestCase
     {
         $expected = 'toto';
 
-        /** @var UserProviderInterface|PHPUnit_Framework_MockObject_MockObject $user */
+        /** @var UserProviderInterface|MockObject $user */
         $user = $this->getMockBuilder(UserProviderInterface::class)
             ->getMock();
 
@@ -425,7 +425,7 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testStart()
     {
-        /** @var Request|PHPUnit_Framework_MockObject_MockObject $request */
+        /** @var Request|MockObject $request */
         $request = $this->getMockBuilder(Request::class)
             ->getMock();
 
