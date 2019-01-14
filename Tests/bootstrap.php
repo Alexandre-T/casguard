@@ -2,7 +2,7 @@
 /**
  * This file is part of the CasGuardBundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -27,9 +27,12 @@ include __DIR__.'/../vendor/autoload.php'; // composer autoload
 $kernel = \AspectMock\Kernel::getInstance();
 $kernel->init([
     'debug' => true,
-    'appDir' => __DIR__ . '/..',
+    'appDir' => __DIR__.'/..',
     'cacheDir' => 'build/cache',
     'includePaths' => [
         __DIR__.'/../vendor/jasig/phpcas',
+        __DIR__.'/../vendor/codeception',
+        __DIR__.'/../vendor/codeception/aspect-mock',
+        __DIR__.'/../vendor/codeception/aspect-mock/tests',
     ],
 ]);

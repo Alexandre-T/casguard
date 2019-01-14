@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * CasGuardExtensionTest class.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ * @category Tests\DependencyInjection
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
@@ -71,6 +71,8 @@ class CasGuardExtensionTest extends TestCase
 
     /**
      * We test a valid configuration.
+     *
+     * @throws \Exception
      */
     public function testValidConfiguration()
     {
@@ -106,6 +108,7 @@ class CasGuardExtensionTest extends TestCase
             'route' => [
                 'homepage' => 'home',
                 'login' => 'login',
+                'logout' => 'home',
             ],
             'language' => Configuration::PHPCAS_LANG_ENGLISH,
             'logout' => [
@@ -115,6 +118,7 @@ class CasGuardExtensionTest extends TestCase
                     0 => 'foo',
                     1 => 'bar',
                 ],
+                'redirect_url' => false,
             ],
         ];
 

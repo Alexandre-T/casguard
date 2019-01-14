@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -20,11 +20,11 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use AlexandreT\Bundle\CasGuardBundle\Security\CasAuthenticator;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use PHPUnit_Framework_MockObject_MockObject;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * CasAuthenticatorTest class.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Tests\Security
+ * @category Tests\Security
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
@@ -60,7 +60,7 @@ class CasAuthenticatorTest extends TestCase
     /**
      * The router is mocked.
      *
-     * @var RouterInterface|PHPUnit_Framework_MockObject_MockObject
+     * @var RouterInterface|MockObject
      */
     private $router;
 
@@ -88,6 +88,9 @@ class CasAuthenticatorTest extends TestCase
      * This is a test to validate AspectMock configuration.
      *
      * @see https://stackoverflow.com/questions/13734224/exception-serialization-of-closure-is-not-allowed
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testAspectMock()
     {
@@ -106,6 +109,9 @@ class CasAuthenticatorTest extends TestCase
      * phpCAS can be used the simplest way, as a CAS client.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testExampleSimple()
     {
@@ -142,6 +148,9 @@ class CasAuthenticatorTest extends TestCase
      * phpCAS can be used the simplest way, as a CAS client.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testExampleSimpleWithoutAllowedClients()
     {
@@ -178,6 +187,9 @@ class CasAuthenticatorTest extends TestCase
      * phpCAS can be used the simplest way, as a CAS client.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testExampleSimpleWithEmptyAllowedClients()
     {
@@ -214,6 +226,9 @@ class CasAuthenticatorTest extends TestCase
      * In this test the server supports SSOS but it is not used.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testExampleSingleSignOutRefused()
     {
@@ -249,6 +264,9 @@ class CasAuthenticatorTest extends TestCase
      * phpCAS can be used the simplest way, as a CAS client.
      *
      * @see https://github.com/apereo/phpCAS/blob/master/docs/examples/example_simple.php
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
     public function testExampleSimpleWithoutUser()
     {
@@ -275,7 +293,7 @@ class CasAuthenticatorTest extends TestCase
     {
         $expected = 'toto';
 
-        /** @var UserProviderInterface|PHPUnit_Framework_MockObject_MockObject $user */
+        /** @var UserProviderInterface|MockObject $user */
         $user = $this->getMockBuilder(UserProviderInterface::class)
             ->getMock();
 
@@ -315,37 +333,45 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
-     * Test onLogoutSuccess() method.
+     * Test onLogoutSuccess() method without redirection.
+     *
+     * @throws \Exception
+     * @throws \PHPUnit_Framework_ExpectationFailedException
      */
-    public function testOnLogoutSuccess()
+    public function testOnLogoutSuccessWithoutRedirection()
     {
         $phpCas = $this->mockPhpCAS();
 
         $this->router
-            ->expects(self::once())
-            ->method('generate')
-            ->with('home')
-            ->willReturn('http://www.example.org/foo/home');
+            ->expects(self::never())
+            ->method('generate');
 
-        $response = $this->guardAuthenticator->onLogoutSuccess(new Request());
+        $this->reloadConfiguration();
+
+        self::assertFalse($this->casService->isRedirectingAfterLogout());
+
+        $this->guardAuthenticator->onLogoutSuccess(new Request());
 
         $phpCas->verifyInvokedOnce('setDebug');
         $phpCas->verifyInvokedOnce('setVerbose');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
+
+        // New feature
+        $phpCas->verifyNeverInvoked('logoutWithRedirectService');
         $phpCas->verifyInvokedOnce('logout');
+
         $phpCas->verifyNeverInvoked('setNoCasServerValidation');
         $phpCas->verifyNeverInvoked('setCasServerCACert');
         $phpCas->verifyNeverInvoked('forceAuthentication');
         $phpCas->verifyNeverInvoked('handleLogoutRequests');
         $phpCas->verifyNeverInvoked('getUser');
-
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertTrue($response->isRedirect('http://www.example.org/foo/home'));
     }
 
     /**
      * Test GetDefaultSuccessRedirectUrl() method.
+     *
+     * @throws \ReflectionException
      */
     public function testGetDefaultSuccessRedirectUrl()
     {
@@ -366,6 +392,8 @@ class CasAuthenticatorTest extends TestCase
 
     /**
      * Test GetLoginUrl() method.
+     *
+     * @throws \ReflectionException
      */
     public function testGetLoginUrl()
     {
@@ -397,7 +425,7 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testStart()
     {
-        /** @var Request|PHPUnit_Framework_MockObject_MockObject $request */
+        /** @var Request|MockObject $request */
         $request = $this->getMockBuilder(Request::class)
             ->getMock();
 
@@ -449,6 +477,7 @@ class CasAuthenticatorTest extends TestCase
             'route' => [
                 'homepage' => 'home',
                 'login' => 'login',
+                'logout' => 'home',
             ],
             'verbose' => true,
             'version' => Configuration::CAS_VERSION_3_0,
@@ -456,6 +485,7 @@ class CasAuthenticatorTest extends TestCase
             'logout' => [
                 'supported' => false,
                 'handled' => false,
+                'redirect_url' => false,
             ],
         ];
 
@@ -491,6 +521,8 @@ class CasAuthenticatorTest extends TestCase
      * @param array $modification
      *
      * @return Verifier
+     *
+     * @throws \Exception
      */
     private function mockPhpCAS(array $modification = [])
     {

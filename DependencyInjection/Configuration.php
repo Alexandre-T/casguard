@@ -2,11 +2,11 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category DependencyInjection
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
@@ -67,17 +67,17 @@ class Configuration implements ConfigurationInterface
     const PHPCAS_LANG_CHINESE_SIMPLIFIED = 'CAS_Languages_ChineseSimplified';
 
     /**
-     * CAS server version 3.0
+     * CAS server version 3.0.
      */
     const CAS_VERSION_3_0 = '3.0';
 
     /**
-     * CAS server version 2.0
+     * CAS server version 2.0.
      */
     const CAS_VERSION_2_0 = '2.0';
 
     /**
-     * CAS server version 1.0
+     * CAS server version 1.0.
      */
     const CAS_VERSION_1_0 = '1.0';
 
@@ -88,7 +88,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('cas_guard');
         $rootNode = $treeBuilder->root('cas_guard');
         $rootNode
             ->children()
@@ -148,6 +148,11 @@ class Configuration implements ConfigurationInterface
                             ->example('my_login_route')
                             ->info('Name of your login route.')
                         ->end()
+                        ->scalarNode('logout')
+                            ->defaultValue('home')
+                            ->example('home')
+                            ->info('Name of the route where user is redirected after successful logout.')
+                        ->end()
                     ->end()
                 ->end()
                 ->booleanNode('verbose')
@@ -184,6 +189,11 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue('[]')
                             ->example('["server1.example.org", "server2.example.org"]')
                             ->info('An array of host names allowed to send logout requests.')
+                        ->end()
+                        ->BooleanNode('redirect_url')
+                            ->defaultFalse()
+                            ->example('true')
+                            ->info('true if you want to provide the url to the user to go back to your application after logout.')
                         ->end()
                     ->end()
                 ->end()

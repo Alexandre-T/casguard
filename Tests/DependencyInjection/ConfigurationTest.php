@@ -25,7 +25,7 @@ use Symfony\Component\Config\Definition\Dumper\YamlReferenceDumper;
 /**
  * Configuration class test.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Tests\DependencyInjection
+ * @category Tests\DependencyInjection
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
@@ -143,6 +143,7 @@ class ConfigurationTest extends TestCase
             'route' => [
                 'homepage' => 'homepage',
                 'login' => 'security_login',
+                'logout' => 'home',
             ],
             'language' => Configuration::PHPCAS_LANG_ENGLISH,
             'logout' => [
@@ -152,6 +153,7 @@ class ConfigurationTest extends TestCase
                     'example1.org',
                     'example2.org',
                 ],
+                'redirect_url' => false,
             ],
         ];
 

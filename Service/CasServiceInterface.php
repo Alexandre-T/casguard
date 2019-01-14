@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -19,7 +19,7 @@ namespace AlexandreT\Bundle\CasGuardBundle\Service;
 /**
  * Interface CasServiceInterface.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Service
+ * @category Service
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
@@ -78,6 +78,15 @@ interface CasServiceInterface
     public function getRouteLogin();
 
     /**
+     * The route where user is redirected after logout.
+     *
+     * It could be the home route of your application.
+     *
+     * @return string
+     */
+    public function getRouteLogout();
+
+    /**
      * Return the port used by your CAS service on your server.
      *
      * @return int
@@ -127,6 +136,15 @@ interface CasServiceInterface
      * @return bool
      */
     public function isSupportingSingleSignOutSignal();
+
+    /**
+     * Is user redirect after logout.
+     *
+     * It could be a link on the logout page on your CAS Server.
+     *
+     * @return bool
+     */
+    public function isRedirectingAfterLogout();
 
     /**
      * Return the verbose mode.

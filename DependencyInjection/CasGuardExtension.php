@@ -2,11 +2,11 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
- * @category Entity
+ * @category DependencyInjection
  *
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
@@ -34,10 +34,11 @@ class CasGuardExtension extends Extension
     /**
      * Loads a specific configuration.
      *
-     * @param array            $configs   An array of configuration values
+     * @param array $configs An array of configuration values
      * @param ContainerBuilder $container A ContainerBuilder instance
      *
      * @throws \InvalidArgumentException When provided tag is not defined in this extension
+     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
     {

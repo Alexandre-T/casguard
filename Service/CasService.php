@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 5.6 | 7.0 | 7.1
+ * PHP version 7.1 | 7.2
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -21,7 +21,7 @@ use AlexandreT\Bundle\CasGuardBundle\Exception\CasException;
 /**
  * CasService class.
  *
- * @category AlexandreT\Bundle\CasGuardBundle\Service
+ * @category Service
  *
  * @author  Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license MIT
@@ -120,6 +120,16 @@ class CasService implements CasServiceInterface
     }
 
     /**
+     * Return the route after successful logout.
+     *
+     * @return string
+     */
+    public function getRouteLogout()
+    {
+        return $this->getRouteParameter('logout');
+    }
+
+    /**
      * Return the URI.
      *
      * @return string
@@ -175,6 +185,18 @@ class CasService implements CasServiceInterface
     public function isHandleLogoutRequest()
     {
         return $this->getLogoutParameter('handled');
+    }
+
+    /**
+     * Is user redirect after logout.
+     *
+     * It could be a link on the logout page on your CAS Server.
+     *
+     * @return bool
+     */
+    public function isRedirectingAfterLogout()
+    {
+        return $this->getLogoutParameter('redirect_url');
     }
 
     /**
