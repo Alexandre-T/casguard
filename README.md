@@ -16,7 +16,8 @@ Symfony 2.8, 3.0, 3.1, 3.2, 3.3 and 3.4. A flex component will be developed to h
 
 I used it in a Symfony 3.3 application and another Symfony 3.4 application. If you experimented it with older versions,
 do not hesitate to forward me your feedback. 
-   
+
+For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use the [dev version](https://github.com/Alexandre-T/casguard/tree/dev)
 
 Installation
 ============
@@ -28,7 +29,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require "alexandret/phpcas-guard-bundle" "~1"
+$ composer require "alexandret/phpcas-guard-bundle" "~0.2.1"
 ```
 
 This command requires you to have Composer installed globally, as explained
