@@ -17,6 +17,7 @@
 namespace AlexandreT\Bundle\CasGuardBundle\Security;
 
 use AlexandreT\Bundle\CasGuardBundle\Service\CasServiceInterface;
+use Countable;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -95,8 +96,9 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
 
         /* @see https://wiki.jasig.org/display/CASC/phpCAS+examples#phpCASexamples-HandlelogoutrequestsfromtheCASserver */
         if ($this->cas->isSupportingSingleSignOutSignal()) {
-            if (!is_null($this->cas->getAllowedClients()) && count($this->cas->getAllowedClients())) {
-                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $this->cas->getAllowedClients());
+            $allowedClients = $this->cas->getAllowedClients();
+            if ($allowedClients instanceof Countable && count($allowedClients)) {
+                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $allowedClients);
             } else {
                 phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest());
             }
