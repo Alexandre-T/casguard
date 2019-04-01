@@ -27,7 +27,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require "alexandret/phpcas-guard-bundle" "~0.2.1"
+$ composer require "alexandret/phpcas-guard-bundle" "@dev"
 ```
 
 This command requires you to have Composer installed globally, as explained
