@@ -1,7 +1,7 @@
 Php CAS Bundle 
 ==============
 
-PhpCas Bundle provide CAS Authentification using guard for symfony 3.4+ and 4.
+PhpCas Bundle provide CAS Authentication using guard for symfony 3.4+ and 4.1+.
 
 This bundle **DO NOT** provide a CAS server. By using this bundle, your application will be able to use your Cas Server
 to authenticate your users.  
@@ -10,9 +10,8 @@ to authenticate your users.
 [![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg?branch=dev)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
 [![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg?branch=dev)](https://travis-ci.org/Alexandre-T/casguard)
 
-As you can see, unit test are covering 100% of code. 
 Travis is helping me to confirm that this bundle can be used with PHP 5.6, 7.0 and 7.1 and 
-Symfony 3.4, 4.0, 4.1, 4.2. A flex component will be developed to help installation on latest symfony version.
+Symfony 3.4, 4.1, 4.2, 4.3. A flex component will be developed to help installation on latest symfony version.
  
 *If your using a older symfony version (like 2.8, 3.3, etc), you have to use v0.2.1 casguard version*  
 
