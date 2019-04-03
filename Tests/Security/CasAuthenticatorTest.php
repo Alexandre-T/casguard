@@ -307,15 +307,52 @@ class CasAuthenticatorTest extends TestCase
     }
 
     /**
-     * Test onAuthenticationSuccess() method.
+     * Test onAuthenticationSuccess() method without initialization to avoid exception (client or proxy not called).
+     *
+     * @throws \Exception
      */
-    public function testOnAuthenticationSuccess()
+    public function testOnAuthenticationSuccessWithoutInitialization()
     {
+        $phpCas = $this->mockPhpCAS();
+
         /** @var TokenInterface $token Mocked token */
         $token = $this->getMockBuilder(TokenInterface::class)
             ->getMock();
 
         self::assertNull($this->guardAuthenticator->onAuthenticationSuccess(new Request(), $token, 'key'));
+
+        $phpCas->verifyInvokedOnce('isInitialized');
+        $phpCas->verifyNeverInvoked('getAttributes');
+
+    }
+
+    /**
+     * Test onAuthenticationSuccess() method with initialization.
+     *
+     * @throws \Exception
+     */
+    public function testOnAuthenticationSuccessWithInitialization()
+    {
+        $expected = $actual = ['foo' => 'bar'];
+        $phpCas = $this->mockPhpCAS();
+        test::double('phpCAS', ['isInitialized' => true]);
+        test::double('phpCAS', ['getAttributes' => $expected]);
+
+        /** @var MockObject|TokenInterface $token Mocked token */
+        $token = $this->getMockBuilder(TokenInterface::class)
+            ->getMock();
+
+        $token->expects(self::once())
+            ->method('setAttributes')
+            ->with($expected);
+
+        self::assertNull($this->guardAuthenticator->onAuthenticationSuccess(new Request(), $token, 'key'));
+
+        $phpCas->verifyInvokedOnce('isInitialized');
+        $phpCas->verifyInvokedOnce('getAttributes');
+
+
+
     }
 
     /**

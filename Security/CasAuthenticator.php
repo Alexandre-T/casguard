@@ -95,8 +95,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
 
         /* @see https://wiki.jasig.org/display/CASC/phpCAS+examples#phpCASexamples-HandlelogoutrequestsfromtheCASserver */
         if ($this->cas->isSupportingSingleSignOutSignal()) {
-            if (!is_null($this->cas->getAllowedClients()) && is_array($this->cas->getAllowedClients()) && count($this->cas->getAllowedClients())) {
-                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $this->cas->getAllowedClients());
+            $allowedClients = $this->cas->getAllowedClients();
+            /* @see https://github.com/Alexandre-T/casguard/issues/5 */
+            /* @see https://github.com/symfony/monolog-bundle/commit/ab76969308496917175374ac734d474733c59757 */
+            if (!empty($allowedClients)) {
+                phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest(), $allowedClients);
             } else {
                 phpCAS::handleLogoutRequests($this->cas->isHandleLogoutRequest());
             }
@@ -157,6 +160,10 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        if (phpCAS::isInitialized()) {
+            $token->setAttributes(phpCAS::getAttributes());
+        }
+
         return null;
     }
 
