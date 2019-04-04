@@ -1,20 +1,20 @@
 Php CAS Bundle 
 ==============
 
-PhpCas Bundle provide CAS Authentification using guard for symfony 3.4+ and 4.
+PhpCas Bundle provide CAS Authentication using guard for symfony 3.4+ and 4.
 
 This bundle **DO NOT** provide a CAS server. By using this bundle, your application will be able to use your Cas Server
 to authenticate your users.  
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b/mini.png)](https://insight.sensiolabs.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b)
-[![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg?branch=dev)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
-[![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg?branch=dev)](https://travis-ci.org/Alexandre-T/casguard)
+[![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
+[![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg)](https://travis-ci.org/Alexandre-T/casguard)
 
-Travis is helping me to confirm that this bundle can be used with PHP 5.6, 7.0 and 7.1 and 
+Travis is helping me to confirm that this bundle can be used with PHP 7.1, 7.2 and 7.3. 
 
-For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use [this dev version](https://github.com/Alexandre-T/casguard/tree/dev)
+For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use [this 1.* version](https://github.com/Alexandre-T/casguard)
 
-For Symfony 2.8, 3.0, 3.1, 3.2, 3.3 and 3.4., your can use [0.2.* version](https://github.com/Alexandre-T/casguard/releases/tag/0.2.1)
+For PHP5.6, PHP 7.0 and Symfony 2.8 and 3.4, your can use [0.2.* version](https://github.com/Alexandre-T/casguard/releases/tag/0.2.1)
 
 Installation
 ============
