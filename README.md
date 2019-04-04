@@ -5,8 +5,7 @@ PhpCas Bundle provide CAS Authentication using guard for symfony 3.4+ and 4.
 
 This bundle **DO NOT** provide a CAS server. By using this bundle, your application will be able to use your Cas Server
 to authenticate your users.  
-
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b/mini.png)](https://insight.sensiolabs.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b)
+[![SymfonyInsight](https://insight.symfony.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b/mini.svg)](https://insight.symfony.com/projects/cb0f5515-dc7a-4295-9faa-83e81fc1e23b)
 [![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
 [![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg)](https://travis-ci.org/Alexandre-T/casguard)
 
