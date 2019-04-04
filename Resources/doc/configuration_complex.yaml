@@ -1,14 +1,3 @@
-Configuration file
-==================
-
-You can download the [default and complete config file](./configuration_sample.yaml).
-
-Here is [another sample](./configuration_complex.yaml) with two allowed clients for logout. 
-
-Default and complete configuration:
---- 
-```yaml
-#/config/packages/cas_guard.yaml
 cas_guard:
 
     # Enter the certificate to identify the CAS server. Set to false if you do not use it. In production, you must use one.
@@ -57,9 +46,9 @@ cas_guard:
         handled:              true # Example: false
 
         # List of host names allowed to send logout requests.
-        allowed_clients:      [] # Example: ["server1.example.org", "server2.example.org"]
+        allowed_clients:
+            - 'server1.example.org'
+            - 'server2.example.org'
 
         # true if you want to provide the url to the user to go back to your application after logout.
         redirect_url:         false # Example: true
-        
-```

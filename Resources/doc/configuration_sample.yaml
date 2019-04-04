@@ -45,8 +45,8 @@ cas_guard:
         # Are your application handling single sign out signal?
         handled:              true # Example: false
 
-        # An array of host names allowed to send logout requests.
-        allowed_clients:      '[]' # Example: ["server1.example.org", "server2.example.org"]
+        # List of host names allowed to send logout requests.
+        allowed_clients:      [] # Example: ["server1.example.org", "server2.example.org"]
 
         # true if you want to provide the url to the user to go back to your application after logout.
         redirect_url:         false # Example: true

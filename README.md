@@ -10,15 +10,11 @@ to authenticate your users.
 [![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg?branch=dev)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
 [![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg?branch=dev)](https://travis-ci.org/Alexandre-T/casguard)
 
-As you can see, unit test are covering 100% of code. 
 Travis is helping me to confirm that this bundle can be used with PHP 5.6, 7.0 and 7.1 and 
 
-Symfony 2.8, 3.0, 3.1, 3.2, 3.3 and 3.4. A flex component will be developed to help installation on latest symfony version.
+For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use [this dev version](https://github.com/Alexandre-T/casguard/tree/dev)
 
-I used it in a Symfony 3.3 application and another Symfony 3.4 application. If you experimented it with older versions,
-do not hesitate to forward me your feedback. 
-
-For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use the [dev version](https://github.com/Alexandre-T/casguard/tree/dev)
+For Symfony 2.8, 3.0, 3.1, 3.2, 3.3 and 3.4., your can use [0.2.* version](https://github.com/Alexandre-T/casguard/releases/tag/0.2.1)
 
 Installation
 ============
@@ -30,7 +26,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require "alexandret/phpcas-guard-bundle" "~0.2.1"
+$ composer require "alexandret/phpcas-guard-bundle" "~1"
 ```
 
 This command requires you to have Composer installed globally, as explained
