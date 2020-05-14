@@ -18,6 +18,7 @@ namespace AlexandreT\Bundle\CasGuardBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -88,8 +89,14 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('cas_guard');
-        $rootNode = $treeBuilder->root('cas_guard');
+        if (1 === version_compare('4.2.0', Kernel::VERSION)) {
+            //Version 3.4
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('cas_guard');
+        } else {
+            $treeBuilder = new TreeBuilder('cas_guard');
+            $rootNode = $treeBuilder->getRootNode();
+        }
         $rootNode
             ->children()
                 ->scalarNode('certificate')
