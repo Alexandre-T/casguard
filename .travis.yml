@@ -13,6 +13,7 @@ php:
   - "7.1"
   - "7.2"
   - "7.3"
+  - "7.4"
 
 # The Symfony version implies that you require the full framework, not single components
 # Requiring single components is much harder to do... And probably not flexible enough, even if it's lighter.
@@ -32,15 +33,23 @@ matrix:
       env: SYMFONY_VERSION="3.4.x"
     - php: "7.3"
       env: SYMFONY_VERSION="3.4.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="3.4.x"
     - php: "7.1"
       env: SYMFONY_VERSION="4.0.x"
     - php: "7.2"
       env: SYMFONY_VERSION="4.0.x"
+    - php: "7.3"
+      env: SYMFONY_VERSION="4.0.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="4.0.x"
     - php: "7.1"
       env: SYMFONY_VERSION="4.1.x"
     - php: "7.2"
       env: SYMFONY_VERSION="4.1.x"
     - php: "7.3"
+      env: SYMFONY_VERSION="4.1.x"
+    - php: "7.4"
       env: SYMFONY_VERSION="4.1.x"
     - php: "7.1"
       env: SYMFONY_VERSION="4.2.x"
@@ -48,16 +57,39 @@ matrix:
       env: SYMFONY_VERSION="4.2.x"
     - php: "7.3"
       env: SYMFONY_VERSION="4.2.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="4.2.x"
     - php: "7.1"
       env: SYMFONY_VERSION="4.3.x"
     - php: "7.2"
       env: SYMFONY_VERSION="4.3.x"
     - php: "7.3"
       env: SYMFONY_VERSION="4.3.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="4.3.x"
+    - php: "7.1"
+      env: SYMFONY_VERSION="4.4.x"
+    - php: "7.2"
+      env: SYMFONY_VERSION="4.4.x"
+    - php: "7.3"
+      env: SYMFONY_VERSION="4.4.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="4.4.x"
+      #Symfony 5.0 cannot be installed with PHP 7.1
+    - php: "7.2"
+      env: SYMFONY_VERSION="5.0.x"
+    - php: "7.3"
+      env: SYMFONY_VERSION="5.0.x"
+    - php: "7.4"
+      env: SYMFONY_VERSION="5.0.x"
   allow_failures:
+    - php: "7.1"
     #  Jan 2019: End of support for security fixes for Sf4.0
     - env: SYMFONY_VERSION="4.0.x"
-    - env: SYMFONY_VERSION="4.3.x"
+    #  Jul 2019: End of support for security fixes for Sf4.1
+    - env: SYMFONY_VERSION="4.1.x"
+    #  Jan 2020: End of support for security fixes for Sf4.2
+    - env: SYMFONY_VERSION="4.2.x"
 
 # Update composer, and update Symfony version depending on the matrix
 before_install:

@@ -9,12 +9,6 @@ to authenticate your users.
 [![Coverage Status](https://coveralls.io/repos/github/Alexandre-T/casguard/badge.svg)](https://coveralls.io/github/Alexandre-T/casguard?branch=master)
 [![Build Status](https://travis-ci.org/Alexandre-T/casguard.svg)](https://travis-ci.org/Alexandre-T/casguard)
 
-Travis is helping me to confirm that this bundle can be used with PHP 7.1, 7.2 and 7.3. 
-
-For Symfony 3.4+, 4.1, 4.2 and 4.3 PHP 7.1, 7.2 and 7.3, you can use [this 1.* version](https://github.com/Alexandre-T/casguard)
-
-For PHP5.6, PHP 7.0 and Symfony 2.8 and 3.4, your can use [0.2.* version](https://github.com/Alexandre-T/casguard/releases/tag/0.2.1)
-
 Installation
 ============
 
@@ -35,7 +29,7 @@ of the Composer documentation.
 Step 2: Enable the Bundle
 -------------------------
 
-For **Symfony 3.4+**, enable the bundle by adding it to the list of registered bundles
+Enable the bundle by adding it to the list of registered bundles
 in the `config/bundles.php` file of your project:
 
 ```php
@@ -50,7 +44,7 @@ return [
 Step 3: Enable the Security
 ----------------------------
 
-For **Symfony 3.4+**, update your `config\packages\security.yaml` file:
+Update your `config\packages\security.yaml` file:
 
 ```yaml
 #http://symfony.com/doc/current/reference/configuration/security.html#full-default-configuration
@@ -76,15 +70,15 @@ security:
 
 Since Symfony 2.8, Guard is providing a new and excellent way to authenticate. I recommend you to have a look 
 on [this excellent tutorial](https://knpuniversity.com/screencast/symfony-security) to understand guard features.
-This tutorial explain how to generate a standard authentication using **guard** and a **login form**. When you 
-understand it, you only have to disabled the call to the login form authenticator implemented in 
+This tutorial explains how to generate a standard authentication using **guard** and a **login form**. When you 
+understand it, you only have to disable the call to the login form authenticator implemented in 
 [the chapter 5](https://knpuniversity.com/screencast/symfony-security/login-form-authenticator) and replace it by 
 the `phpcasguard.cas_authenticator` declared inside this bundle. 
 
 Step 4: Configure the Bundle
 ----------------------------
 
-For **Symfony 3.4+**, create a `config\packages\cas_guard.yaml` file:
+Create a `config\packages\cas_guard.yaml` file:
 
 ```yaml
 cas_guard:

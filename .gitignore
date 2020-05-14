@@ -1,3 +1,7 @@
+#lock files
+composer.lock
+symfony.lock
+
 # PHPUnit
 /phpunit.xml
 
