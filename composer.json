@@ -16,7 +16,7 @@
         "source": "https://github.com/Alexandre-T/casguard"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "jasig/phpcas": "~1.3",
 	    "symfony/security-guard": "~3.4|4.*|~5.0",
         "symfony/config": "~3.4|4.*|~5.0",
