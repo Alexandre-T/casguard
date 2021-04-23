@@ -13,7 +13,8 @@ php:
   - "7.1"
   - "7.2"
   - "7.3"
-  - "7.4"
+  - "7.4"  
+  - "8.0"
 
 # The Symfony version implies that you require the full framework, not single components
 # Requiring single components is much harder to do... And probably not flexible enough, even if it's lighter.
@@ -81,6 +82,8 @@ matrix:
     - php: "7.3"
       env: SYMFONY_VERSION="5.0.x"
     - php: "7.4"
+      env: SYMFONY_VERSION="5.0.x"    
+    - php: "8.0"
       env: SYMFONY_VERSION="5.0.x"
   allow_failures:
     - php: "7.1"
