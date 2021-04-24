@@ -10,8 +10,6 @@ cache:
 
 # Base versions to test raw with the Symfony latest version.
 php:
-  - "7.1"
-  - "7.2"
   - "7.3"
   - "7.4"
   - "8.0"
@@ -77,7 +75,7 @@ before_install:
 # Note: for coveralls to work you need a ".coveralls.yml" file (see other file in this gist).
 install:
   - composer install
-  - composer require --dev satooshi/php-coveralls:~2.0
+  - composer require --dev php-coveralls/php-coveralls
 
 # Run script and log coverage in the "build" directory
 script:
