@@ -22,6 +22,7 @@ use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use ReflectionClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,13 +96,14 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testAspectMock()
     {
-        $phpCas = test::double('phpCAS', ['setDebug' => function () {
-            echo 'YES I CALL THE MOCKED Debug function';
+        $fakeLog = new NullLogger;
+        $phpCas = test::double('phpCAS', ['setLogger' => function () {
+            echo 'YES I CALL THE MOCKED Logger function';
         }]);
 
-        phpCAS::setDebug();
-        $phpCas->verifyInvoked('setDebug', false);
-        self::expectOutputString('YES I CALL THE MOCKED Debug function');
+        phpCAS::setLogger($fakeLog);
+        $phpCas->verifyInvoked('setLogger', $fakeLog);
+        self::expectOutputString('YES I CALL THE MOCKED Logger function');
     }
 
     /**
@@ -132,7 +134,7 @@ class CasAuthenticatorTest extends TestCase
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
@@ -171,7 +173,7 @@ class CasAuthenticatorTest extends TestCase
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
@@ -210,7 +212,7 @@ class CasAuthenticatorTest extends TestCase
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
@@ -248,7 +250,7 @@ class CasAuthenticatorTest extends TestCase
         //The first request call credentials and return a user (here this is a string)
         self::assertEquals($expected, $this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
         $phpCas->verifyInvokedOnce('setVerbose');
@@ -276,7 +278,7 @@ class CasAuthenticatorTest extends TestCase
         //The second request call credentials and do not return user
         self::assertNull($this->guardAuthenticator->getCredentials(new Request()));
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setVerbose');
         $phpCas->verifyInvokedOnce('setLang');
@@ -390,7 +392,7 @@ class CasAuthenticatorTest extends TestCase
 
         $this->guardAuthenticator->onLogoutSuccess(new Request());
 
-        $phpCas->verifyInvokedOnce('setDebug');
+        $phpCas->verifyInvokedOnce('setLogger');
         $phpCas->verifyInvokedOnce('setVerbose');
         $phpCas->verifyInvokedOnce('client');
         $phpCas->verifyInvokedOnce('setLang');
@@ -502,10 +504,6 @@ class CasAuthenticatorTest extends TestCase
     {
         parent::setUp();
 
-        if (!class_exists('phpCAS')) {
-            $this->markTestSkipped('PhpCas is not present');
-        }
-
         $this->configuration = [
             'certificate' => false,
             'debug' => 'debug.log',
@@ -568,7 +566,7 @@ class CasAuthenticatorTest extends TestCase
             $modification['getUser'] = null;
         }
 
-        test::double('phpCAS', ['setDebug' => null]);
+        test::double('phpCAS', ['setLogger' => null]);
         test::double('phpCAS', ['client' => null]);
         test::double('phpCAS', ['setLang' => null]);
         test::double('phpCAS', ['forceAuthentication' => null]);

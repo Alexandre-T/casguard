@@ -17,6 +17,8 @@
 namespace AlexandreT\Bundle\CasGuardBundle\Service;
 
 use AlexandreT\Bundle\CasGuardBundle\Exception\CasException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * CasService class.
@@ -72,11 +74,12 @@ class CasService implements CasServiceInterface
      *
      * If empty, phpcas will use the default log file ("os_tmp_dir"/phpcas.log)
      *
-     * @return bool|string
+     * @return ?LoggerInterface
      */
     public function getDebug()
     {
-        return $this->getParameter('debug');
+        //FIXME call a service!
+        return new NullLogger();//$this->getParameter('debug');
     }
 
     /**

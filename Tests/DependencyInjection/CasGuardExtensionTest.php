@@ -51,9 +51,6 @@ class CasGuardExtensionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        if (!class_exists('phpCAS')) {
-            $this->markTestSkipped('PhpCas is not present');
-        }
 
         $this->casGuardExtension = $this->getExtension();
     }

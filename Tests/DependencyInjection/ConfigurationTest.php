@@ -66,7 +66,7 @@ class ConfigurationTest extends TestCase
     public function testUndefinedConfigTreeBuilder()
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('The child node "hostname" at path "cas_guard" must be configured.');
+        self::expectExceptionMessage('The child config "hostname" under "cas_guard" must be configured: Enter the hostname of the CAS server.');
         $node = $this->configuration->getConfigTreeBuilder()->buildTree();
         $normalizedConfig = $node->normalize([]);
         $node->finalize($normalizedConfig);

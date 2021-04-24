@@ -24,7 +24,8 @@
         "symfony/yaml": "~3.4|4.*|5.*"
     },
     "autoload": {
-        "psr-4": { "AlexandreT\\Bundle\\CasGuardBundle\\": "" }
+        "psr-4": { "AlexandreT\\Bundle\\CasGuardBundle\\": "" },
+        "files": ["vendor/jasig/phpcas/source/CAS.php"]
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

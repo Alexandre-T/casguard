@@ -16,6 +16,8 @@
 
 namespace AlexandreT\Bundle\CasGuardBundle\Service;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * Interface CasServiceInterface.
  *
@@ -41,11 +43,11 @@ interface CasServiceInterface
     public function getCertificate();
 
     /**
-     * Return the filename used for phpCas logs or false when debug is disabled.
+     * Return a loggerInterface.
      *
-     * If empty, phpcas will use the default log file ("os_tmp_dir"/phpcas.log)
+     * If null, phpcas won't log.
      *
-     * @return bool|string
+     * @return ?LoggerInterface
      */
     public function getDebug();
 
