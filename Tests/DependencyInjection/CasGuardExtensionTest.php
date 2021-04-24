@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -48,10 +48,9 @@ class CasGuardExtensionTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-
         if (!class_exists('phpCAS')) {
             $this->markTestSkipped('PhpCas is not present');
         }
@@ -62,7 +61,7 @@ class CasGuardExtensionTest extends TestCase
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->casGuardExtension = null;
 

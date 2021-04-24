@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *

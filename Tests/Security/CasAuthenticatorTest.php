@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -22,6 +22,7 @@ use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use AspectMock\Proxy\Verifier;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -333,7 +334,7 @@ class CasAuthenticatorTest extends TestCase
      */
     public function testOnAuthenticationSuccessWithInitialization()
     {
-        $expected = $actual = ['foo' => 'bar'];
+        $expected = ['foo' => 'bar'];
         $phpCas = $this->mockPhpCAS();
         test::double('phpCAS', ['isInitialized' => true]);
         test::double('phpCAS', ['getAttributes' => $expected]);
@@ -420,7 +421,7 @@ class CasAuthenticatorTest extends TestCase
             ->with('home')
             ->willReturn($actual);
 
-        $class = new \ReflectionClass($this->guardAuthenticator);
+        $class = new ReflectionClass($this->guardAuthenticator);
         $method = $class->getMethod('getDefaultSuccessRedirectUrl');
         $method->setAccessible(true);
 
@@ -442,7 +443,7 @@ class CasAuthenticatorTest extends TestCase
             ->with('login')
             ->willReturn($actual);
 
-        $class = new \ReflectionClass($this->guardAuthenticator);
+        $class = new ReflectionClass($this->guardAuthenticator);
         $method = $class->getMethod('getLoginUrl');
         $method->setAccessible(true);
 
@@ -480,7 +481,7 @@ class CasAuthenticatorTest extends TestCase
     /**
      * Setup the Phpunit exception before class instantiation.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         //To fix a bug in AspectMock library.
         //In PHPUnit 6.x the PHPUnit_Framework_ExpectationFailedException was replaced by ExpectationFailedException
@@ -497,7 +498,7 @@ class CasAuthenticatorTest extends TestCase
      * This method is called before the execution of a test starts
      * and after setUp() is called.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -541,7 +542,7 @@ class CasAuthenticatorTest extends TestCase
      * Tears down the fixture and clean the double.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         test::clean();

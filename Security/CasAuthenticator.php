@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -157,11 +157,11 @@ class CasAuthenticator extends AbstractGuardAuthenticator implements LogoutSucce
      *
      * @param Request        $request
      * @param TokenInterface $token
-     * @param string         $providerKey The provider (i.e. firewall) key
+     * @param string $providerKey The provider (i.e. firewall) key
      *
      * @return Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): ?Response
     {
         if (phpCAS::isInitialized()) {
             $token->setAttributes(phpCAS::getAttributes());

@@ -42,7 +42,7 @@ class ConfigurationTest extends TestCase
     /**
      * Setup the configuration property before each test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->configuration = new Configuration();
     }
@@ -50,7 +50,7 @@ class ConfigurationTest extends TestCase
     /**
      * Test the dump!
      */
-    public function testDump()
+    public function testDump(): void
     {
         $expected = str_replace("\r\n", "\n", file_get_contents(__DIR__.'/../../Resources/doc/configuration_sample.yaml'));
         $dumper = new YamlReferenceDumper();

@@ -11,18 +11,17 @@
         }
     ],
     "support": {
-        "email": "Alexandre.Tranchant@gmail.com",
         "issues": "https://github.com/Alexandre-T/casguard/issues",
         "source": "https://github.com/Alexandre-T/casguard"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "jasig/phpcas": "~1.3",
-	    "symfony/security-guard": "~3.4|4.*|~5.0",
+	    "symfony/security-guard": "~3.4|4.*|5.*",
         "symfony/config": "~3.4|4.*|~5.0",
-        "symfony/dependency-injection": "~3.4|4.*|~5.0",
-        "symfony/routing": "~3.4|4.*|~5.0",
-        "symfony/yaml": "~3.4|4.*|~5.0"
+        "symfony/dependency-injection": "~3.4|4.*|5.*",
+        "symfony/routing": "~3.4|4.*|5.*",
+        "symfony/yaml": "~3.4|4.*|5.*"
     },
     "autoload": {
         "psr-4": { "AlexandreT\\Bundle\\CasGuardBundle\\": "" }
@@ -31,8 +30,9 @@
     "prefer-stable": true,
     "require-dev": {
         "codeception/aspect-mock": "*",
-        "phpunit/phpunit": "~7.5",
-        "symfony/debug": "~3.4|4.*|~5.0",
-        "symfony/phpunit-bridge": "~3.4|4.*|~5.0"
+        "phpunit/phpunit": "~8.5",
+        "symfony/debug": "~3.4|4.*|5.*",
+        "symfony/phpunit-bridge": "~3.4|4.*|5.*",
+        "php-coveralls/php-coveralls": "^2.4"
     }
 }

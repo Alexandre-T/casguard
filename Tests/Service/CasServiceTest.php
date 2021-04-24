@@ -2,7 +2,7 @@
 /**
  * This file is part of the PhpCAS Guard Bundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -20,6 +20,8 @@ use AlexandreT\Bundle\CasGuardBundle\DependencyInjection\Configuration;
 use AlexandreT\Bundle\CasGuardBundle\Exception\CasException;
 use AlexandreT\Bundle\CasGuardBundle\Service\CasService;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * CasServiceTest class.
@@ -50,7 +52,7 @@ class CasServiceTest extends TestCase
         self::assertFalse($this->service->getCertificate());
         self::assertInternalType('string', $this->service->getDebug());
         self::assertEquals('example.org', $this->service->getHostname());
-        self::assertEquals(PHPCAS_LANG_ENGLISH, $this->service->getLanguage());
+        self::assertEquals(Configuration::PHPCAS_LANG_ENGLISH, $this->service->getLanguage());
         self::assertEquals('security_login', $this->service->getRouteLogin());
         self::assertEquals('homepage', $this->service->getRouteHomepage());
         self::assertEquals(443, $this->service->getPort());
@@ -111,12 +113,12 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetParameter()
     {
         $casService = new CasService(['foo' => 'bar']);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getParameter');
         $method->setAccessible(true);
         $output = $method->invoke($casService, 'foo');
@@ -127,7 +129,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetNonExistentParameter()
     {
@@ -135,7 +137,7 @@ class CasServiceTest extends TestCase
         self::expectExceptionMessage('The non-existent parameter must be defined. It is missing.');
 
         $casService = new CasService(['foo' => 'bar']);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getParameter');
         $method->setAccessible(true);
         $method->invoke($casService, 'non-existent');
@@ -144,7 +146,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getRouteParameter() method with reflection class.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetRouteParameter()
     {
@@ -153,7 +155,7 @@ class CasServiceTest extends TestCase
                 'foo' => 'bar',
             ],
         ]);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getRouteParameter');
         $method->setAccessible(true);
         $output = $method->invoke($casService, 'foo');
@@ -164,7 +166,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetNonExistentRouteParameter()
     {
@@ -176,7 +178,7 @@ class CasServiceTest extends TestCase
                 'foo' => 'bar',
             ],
         ]);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getRouteParameter');
         $method->setAccessible(true);
         $method->invoke($casService, 'non-existent');
@@ -185,7 +187,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetNonExistentRouteSubParameter()
     {
@@ -197,7 +199,7 @@ class CasServiceTest extends TestCase
                 'foo' => 'bar',
             ],
         ]);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getRouteParameter');
         $method->setAccessible(true);
         $method->invoke($casService, 'non-existent');
@@ -206,7 +208,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetNonExistentLogoutParameter()
     {
@@ -218,7 +220,7 @@ class CasServiceTest extends TestCase
                 'foo' => 'bar',
             ],
         ]);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getLogoutParameter');
         $method->setAccessible(true);
         $method->invoke($casService, 'non-existent');
@@ -227,7 +229,7 @@ class CasServiceTest extends TestCase
     /**
      * test private getParameter() method with reflection class and a non-existent parameter.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testPrivateGetNonExistentLogoutSubParameter()
     {
@@ -239,7 +241,7 @@ class CasServiceTest extends TestCase
                 'foo' => 'bar',
             ],
         ]);
-        $class = new \ReflectionClass($casService);
+        $class = new ReflectionClass($casService);
         $method = $class->getMethod('getLogoutParameter');
         $method->setAccessible(true);
         $method->invoke($casService, 'non-existent');

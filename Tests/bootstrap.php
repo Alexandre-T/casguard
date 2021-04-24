@@ -2,7 +2,7 @@
 /**
  * This file is part of the CasGuardBundle.
  *
- * PHP version 7.1 | 7.2
+ * PHP version 7.3 | 7.4 | 8.0
  *
  * (c) Alexandre Tranchant <alexandre.tranchant@gmail.com>
  *
@@ -22,9 +22,12 @@
  * @author    Alexandre Tranchant <alexandre.tranchant@gmail.com>
  * @license   MIT
  */
+
+use AspectMock\Kernel;
+
 include __DIR__.'/../vendor/autoload.php'; // composer autoload
 
-$kernel = \AspectMock\Kernel::getInstance();
+$kernel = Kernel::getInstance();
 $kernel->init([
     'debug' => true,
     'appDir' => __DIR__.'/..',

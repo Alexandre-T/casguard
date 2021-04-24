@@ -1,7 +1,8 @@
 Php CAS Bundle 
 ==============
 
-PhpCas Bundle provide CAS Authentication using guard for symfony 3.4+ and 4.
+PhpCas Bundle provide CAS Authentication using guard for symfony 3.4+, 4+ and 5+.
+PhpCas Bundle can now be used with PHP8.
 
 This bundle **DO NOT** provide a CAS server. By using this bundle, your application will be able to use your Cas Server
 to authenticate your users.  
@@ -11,6 +12,8 @@ to authenticate your users.
 
 Installation
 ============
+
+Flex is not available for this project yet.
 
 Step 1: Download the Bundle
 ---------------------------
