@@ -98,7 +98,7 @@ class CasAuthenticatorTest extends TestCase
             echo 'YES I CALL THE MOCKED Debug function';
         }]);
 
-        phpCAS::setDebug();
+        phpCAS::setLogger();
         $phpCas->verifyInvoked('setDebug', false);
         self::expectOutputString('YES I CALL THE MOCKED Debug function');
     }
